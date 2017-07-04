@@ -1,0 +1,42 @@
+﻿@using Entity;
+
+@{
+    ICollection<Order> orders = ViewBag.orders;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div class="container body-content">
+        <h2>Order</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>NAME</th>
+                    <th>EMPLOYEE ID</th>
+                    <th>CUSTOMER ID</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach (Order order in orders)
+                    {
+                        <tr>
+                            <td>@order.ID</td>
+                            <td>@order.createdTime</td>
+                            <td>@order.employeeID</td>
+                            <td>@order.customerID</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
