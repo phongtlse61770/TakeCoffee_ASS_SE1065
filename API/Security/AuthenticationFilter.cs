@@ -30,7 +30,7 @@ namespace API.Security
             try
             {
                 String action = actionContext.Request.RequestUri.Segments.Last();
-                if (action.Equals("CheckLogin"))
+                if (action.ToUpper().Equals("CheckLogin".ToUpper()))
                 {
                     isAllow = true;
                 }
