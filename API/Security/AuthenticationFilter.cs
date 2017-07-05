@@ -37,7 +37,7 @@ namespace API.Security
                     isAllow = userHelper.Authenticate(username, password);
                 }
             }
-            catch (InvalidOperationException ex)
+            catch (InvalidOperationException)
             {
                 //Do nothing   
             }

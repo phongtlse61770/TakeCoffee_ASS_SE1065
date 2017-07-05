@@ -21,5 +21,17 @@ namespace Entity.Helper
                                  .Count(user => user.isAdmin == true) == 1;
             return isSuccess;
         }
+
+        public decimal GetBalance(int id)
+        {
+            var user = db.Users.Find(id);
+            if (user?.balance != null)
+            {
+                Decimal balance = user.balance.Value;
+                return balance;
+            }
+            throw new Exception($"User with id {id} not existed");
+
+        }
     }
 }
