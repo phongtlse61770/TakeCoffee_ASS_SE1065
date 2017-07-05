@@ -13,6 +13,21 @@ namespace Entity.Helper
             return db.Orders.ToList<Order>();
         }
 
+        public Decimal CalculateOrderPrice(Order order)
+        {
+            decimal totalPrice = 0;
+            foreach (OrderProduct orderProduct in order.OrderProducts)
+            {
+                totalPrice += orderProduct.unitPrice.Value * orderProduct.quantity.Value;
+            }
+            return totalPrice;
+        }
+
+        public Decimal CalculateOrderPrice(Order order,decimal shipfee)
+        {
+            return CalculateOrderPrice(order) + shipfee;
+        }
+
         /// <summary>
         /// Add new order
         /// </summary>
