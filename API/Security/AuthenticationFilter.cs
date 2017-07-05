@@ -24,20 +24,28 @@ namespace API.Security
         {
             HttpRequestHeaders headers = actionContext.Request.Headers;
 
-
             String username = null;
             String password = null;
             bool isAllow = false;
             try
             {
-                username = headers.GetValues("username").First();
-                password = headers.GetValues("password").First();
-                using (UserHelper userHelper = new UserHelper())
+                String action = actionContext.Request.RequestUri.Segments.Last();
+                if (action.Equals("CheckLogin"))
                 {
-                    isAllow = userHelper.Authenticate(username, password);
+                    isAllow = true;
                 }
+                else
+                {
+                    username = headers.GetValues("username").First();
+                    password = headers.GetValues("password").First();
+                    using (UserHelper userHelper = new UserHelper())
+                    {
+                        isAllow = userHelper.Authenticate(username, password);
+                    }
+                }
+                
             }
-            catch (InvalidOperationException)
+            catch (Exception)
             {
                 //Do nothing   
             }
