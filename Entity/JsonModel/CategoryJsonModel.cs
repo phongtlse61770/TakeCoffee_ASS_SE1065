@@ -12,16 +12,25 @@ namespace Entity.JsonModel
     {
         [JsonProperty("ID")]
         public int ID { get; set; }
+
         [JsonProperty("name")]
         public String Name { get; set; }
 
-        public static explicit operator CategoryJsonModel(Category category)
+        [JsonProperty("products")] 
+        public ICollection<ProductJsonModel> ProductList;
+
+        internal static CategoryJsonModel FromEntity(Category category)
         {
             return new CategoryJsonModel
             {
                 ID = category.ID,
                 Name = category.name
             };
+        }
+
+        public static explicit operator CategoryJsonModel(Category category)
+        {
+            return FromEntity(category);
         }
     }
 }

@@ -39,7 +39,9 @@
           <Property Name="name" Type="nvarchar" MaxLength="255" />
           <Property Name="categoryID" Type="int" />
           <Property Name="unitPrice" Type="decimal" Precision="19" Scale="4" />
+          <Property Name="isRemoved" Type="bit" Nullable="false" />
           <Property Name="isDisabled" Type="bit" Nullable="false" />
+          <Property Name="image" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -222,7 +224,9 @@
           <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="categoryID" Type="Int32" />
           <Property Name="unitPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="isRemoved" Type="Boolean" Nullable="false" />
           <Property Name="isDisabled" Type="Boolean" Nullable="false" />
+          <Property Name="image" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Category" Relationship="TakeCoffeeModel.FK_Product_Category" FromRole="Product" ToRole="Category" />
           <NavigationProperty Name="OrderProducts" Relationship="TakeCoffeeModel.FK_OrderProduct_Product" FromRole="Product" ToRole="OrderProduct" />
         </EntityType>
@@ -347,7 +351,9 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="TakeCoffeeModel.Product">
               <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="image" ColumnName="image" />
                 <ScalarProperty Name="isDisabled" ColumnName="isDisabled" />
+                <ScalarProperty Name="isRemoved" ColumnName="isRemoved" />
                 <ScalarProperty Name="unitPrice" ColumnName="unitPrice" />
                 <ScalarProperty Name="categoryID" ColumnName="categoryID" />
                 <ScalarProperty Name="name" ColumnName="name" />

@@ -23,7 +23,9 @@ namespace Entity
         public string name { get; set; }
         public Nullable<int> categoryID { get; set; }
         public Nullable<decimal> unitPrice { get; set; }
+        public bool isRemoved { get; set; }
         public bool isDisabled { get; set; }
+        public string image { get; set; }
     
         public virtual Category Category { get; set; }
         public virtual ICollection<OrderProduct> OrderProducts { get; set; }

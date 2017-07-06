@@ -20,7 +20,7 @@ namespace Entity.JsonModel
         [JsonProperty("price", NullValueHandling = NullValueHandling.Ignore)]
         public Decimal? Price { get; set; }
 
-        [JsonProperty("category")]
+        [JsonProperty("category", NullValueHandling = NullValueHandling.Ignore)]
         public CategoryJsonModel Category { get; set; }
 
         [JsonProperty("quantity", NullValueHandling = NullValueHandling.Ignore)]
@@ -29,20 +29,25 @@ namespace Entity.JsonModel
         [JsonProperty("isAvailable", NullValueHandling = NullValueHandling.Ignore)]
         public bool? IsAvailable { get; set; }
 
-        public static ProductJsonModel FromEntity(Product product)
+        internal static ProductJsonModel FromEntity(Product product,bool category = true)
         {
-            return new ProductJsonModel
+            ProductJsonModel productJsonModel = new ProductJsonModel
             {
                 ID = product.ID,
                 Name = product.name,
                 Price = product.unitPrice,
-                Category = (CategoryJsonModel) product.Category,
+//                Category = (CategoryJsonModel) product.Category,
                 Quantity = null,
                 IsAvailable = true
             };
+            if (category)
+            {
+                productJsonModel.Category = (CategoryJsonModel) product.Category;
+            }
+            return productJsonModel;
         }
 
-        public static ProductJsonModel FromEntity(OrderProduct orderProduct)
+        internal static ProductJsonModel FromEntity(OrderProduct orderProduct)
         {
             Product product = orderProduct.Product;
             return new ProductJsonModel
