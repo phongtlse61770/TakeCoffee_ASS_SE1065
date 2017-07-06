@@ -13,7 +13,7 @@ import java.io.IOException;
 /**
  * Created by Phong on 7/5/2017.
  */
-public class TakeCoffeeService extends IntentService {
+class TakeCoffeeService extends IntentService {
     static String SERVICE_NAME = "TakeCoffeeService";
 
     public static String EXTRA_SERVICE_TYPE = "EXTRA_SERVICE_TYPE";

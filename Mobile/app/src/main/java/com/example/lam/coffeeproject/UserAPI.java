@@ -1,6 +1,7 @@
 package com.example.lam.coffeeproject;
 
 import com.example.lam.coffeeproject.API.TakeCoffeeService;
+import com.example.lam.coffeeproject.API.TakeCoffeeServiceHelper;
 import com.example.lam.coffeeproject.API.TakeCoffeeServiceType;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -34,19 +35,7 @@ public class UserAPI extends AppCompatActivity {
     }
 
     public void CheckWallet(View view) {
-        String broadcastName = "checkBalance";
-
-        Bundle dataBundle = new Bundle();
-        dataBundle.putInt("id",2);
-        Intent intent = new Intent(Intent.ACTION_SYNC, null, this, TakeCoffeeService.class);
-//        Intent intent = new Intent(this, TakeCoffeeService.class);
-        intent.putExtra(TakeCoffeeService.EXTRA_SERVICE_TYPE, TakeCoffeeServiceType.CheckBalance);
-        intent.putExtra(TakeCoffeeService.EXTRA_BROADCAST_NAME,broadcastName);
-        intent.putExtra(TakeCoffeeService.EXTRA_BUNDLE,dataBundle);
-
-        startService(intent);
-        Log.d("UserAPI","startService");
-
+        TakeCoffeeServiceHelper.checkBalance(this);
     }
 
     public void ViewStoreLocation(View view) {
