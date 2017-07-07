@@ -11,8 +11,10 @@ public class GetBalanceRequest extends BaseRequest{
     public static String REQUEST_NAME = "GET_BALANCE_REQUEST";
     public static String BUNDLE_BALANCE = "BALANCE";
 
-    public GetBalanceRequest() {
+    private int userId;
+    public GetBalanceRequest(int id) {
         super("phongtl", "1234");
+        this.userId = id;
     }
 
     @Override
@@ -23,7 +25,7 @@ public class GetBalanceRequest extends BaseRequest{
     @Override
     String getRequestJsonBody() throws JSONException {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("id","2");
+        jsonObject.put("id",userId);
         return jsonObject.toString();
     }
 

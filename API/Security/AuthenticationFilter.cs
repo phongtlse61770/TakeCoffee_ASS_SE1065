@@ -25,38 +25,41 @@ namespace API.Security
         {
             HttpRequestHeaders headers = actionContext.Request.Headers;
 
-            String username = null;
-            String password = null;
             bool isAllow = false;
-            try
+            String action = actionContext.Request.RequestUri.Segments.Last();
+            switch (action.ToLower())
             {
-                String action = actionContext.Request.RequestUri.Segments.Last();
-                if (action.ToUpper().Equals("CheckLogin".ToUpper()))
-                {
+                case "checklogin":
+                case "create":
                     isAllow = true;
-                }
-                else
-                {
-                    username = headers.GetValues("username").First();
-                    password = headers.GetValues("password").First();
-                    using (UserHelper userHelper = new UserHelper())
+                    break;
+                default:
+                    try
                     {
-                        isAllow = userHelper.Authenticate(username, password);
+                        string username = headers.GetValues("username").First();
+                        string password = headers.GetValues("password").First();
+                        using (UserHelper userHelper = new UserHelper())
+                        {
+                            isAllow = userHelper.Authenticate(username, password);
+                        }
                     }
-                }
-                
+                    catch (Exception)
+                    {
+                    }
+
+
+                    break;
             }
-            catch (Exception)
-            {
-                //Do nothing   
-            }
-            
+
+
             if (!isAllow)
             {
-                JObject rep = new JObject();
-                rep["message"] = "Access denied";
+                JObject rep = new JObject
+                {
+                    ["message"] = "Access denied"
+                };
                 actionContext.Response =
-                    new HttpResponseMessage()
+                    new HttpResponseMessage
                     {
                         StatusCode = HttpStatusCode.Forbidden,
                         Content = new StringContent(rep.ToString())

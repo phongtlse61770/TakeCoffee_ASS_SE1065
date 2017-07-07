@@ -9,7 +9,7 @@ namespace Entity.Helper
         {
             bool isSuccess = db.Users
                                  .Where(user => user.username.Equals(username))
-                                 .Count(user => user.password.Equals(password)) == 1;
+                                 .Any(user => user.password.Equals(password));
             return isSuccess;
         }
 
@@ -18,7 +18,7 @@ namespace Entity.Helper
             bool isSuccess = db.Users
                                  .Where(user => user.username.Equals(username))
                                  .Where(user => user.password.Equals(password))
-                                 .Count(user => user.isAdmin == true) == 1;
+                                 .Any(user => user.isAdmin == true);
             return isSuccess;
         }
 
@@ -26,7 +26,7 @@ namespace Entity.Helper
         {
             bool isSuccess = false;
             bool isDuplicatedUsername = db.Users
-                                            .Count(user => user.username.Equals(username)) > 0;
+                                            .Any(user => user.username == username );
             if (!isDuplicatedUsername)
             {
                 User newUser = new User
@@ -35,7 +35,7 @@ namespace Entity.Helper
                     password = password,
                     phonenumber = phonenumber,
                     balance = 0,
-                    isAdmin = false,
+                    isAdmin = false
                 };
                 db.Users.Add(newUser);
                 int affectedRecord = db.SaveChanges();
@@ -54,7 +54,7 @@ namespace Entity.Helper
 //        {
 //
 //        }
-
+        
         public decimal GetBalance(int id)
         {
             var user = db.Users.Find(id);

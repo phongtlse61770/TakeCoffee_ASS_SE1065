@@ -35,15 +35,15 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        [Route("CheckLogin")]
-        public IHttpActionResult CheckLogin([FromBody] JObject obj)
+        [Route("checklogin")]
+        public IHttpActionResult CheckLogin([FromBody] JObject jsonObject)
         {
             string username;
             string password;
             try
             {
-                username = obj["username"].Value<string>();
-                password = obj["password"].Value<string>();
+                username = jsonObject["username"].Value<string>();
+                password = jsonObject["password"].Value<string>();
             }
             catch (Exception)
             {
@@ -53,6 +53,34 @@ namespace API.Controllers
             using (UserHelper userHelper = new UserHelper())
             {
                 bool isSuccess = userHelper.Authenticate(username, password);
+                dynamic response = new JObject();
+                response["result"] = isSuccess;
+                return Ok(response);
+            }
+        }
+
+        [HttpPost]
+        [Route("create")]
+        public IHttpActionResult Register([FromBody] JObject jsonObject)
+        {
+            string username;
+            string password;
+            string phonenumber;
+
+            try
+            {
+                username = jsonObject["username"].Value<string>();
+                password = jsonObject["password"].Value<string>();
+                phonenumber = jsonObject["phonenumber"].Value<string>();
+            }
+            catch (Exception)
+            {
+                return BadRequest("Invalid request");
+            }
+            //---------------------------------------------
+            using (UserHelper userHelper = new UserHelper())
+            {
+                bool isSuccess = userHelper.CreateUser(username, password, phonenumber);
                 dynamic response = new JObject();
                 response["result"] = isSuccess;
                 return Ok(response);

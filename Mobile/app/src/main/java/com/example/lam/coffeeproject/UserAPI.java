@@ -27,6 +27,7 @@ public class UserAPI extends AppCompatActivity {
             @Override
             public void onReceive(Context context, Intent intent) {
                 Bundle bundle = intent.getBundleExtra(TakeCoffeeService.EXTRA_BUNDLE);
+
                 float balance = bundle.getFloat(GetBalanceRequest.BUNDLE_BALANCE);
                 Toast.makeText(UserAPI.this, ""+balance, Toast.LENGTH_SHORT).show();
             }
