@@ -44,7 +44,9 @@ namespace API.Controllers
                         ICollection<ProductJsonModel> productJsonModels = new List<ProductJsonModel>();
                         foreach (Product product in productHelper.GetProductByCaterory(category.ID))
                         {
-                            productJsonModels.Add((ProductJsonModel)product);
+                            ProductJsonModel productJsonModel = (ProductJsonModel) product;
+                            productJsonModel.Category = null;
+                            productJsonModels.Add(productJsonModel);
                         }
                         CategoryJsonModel categoryJsonModel = (CategoryJsonModel) category;
                         categoryJsonModel.ProductList = productJsonModels;
