@@ -13,6 +13,13 @@ namespace Entity.Helper
         public ICollection<Product> GetAllProduct()
         {
             return db.Products.ToList<Product>();
-        }        
+        }
+
+        public ICollection<Product> GetProductByCaterory(int categoryID)
+        {
+            return db.Products
+                .Where(product => product.categoryID == categoryID)
+                .ToList<Product>();
+        }
     }
 }

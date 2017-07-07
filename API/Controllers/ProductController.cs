@@ -34,18 +34,25 @@ namespace API.Controllers
         [Route("menu")]
         public IHttpActionResult GetMenu()
         {
-            using (ProductHelper productHelper = new ProductHelper())
+            using (CategoryHelper categoryHelper = new CategoryHelper())
             {
-                ICollection<ProductJsonModel> productJsonModels = new List<ProductJsonModel>();
-                foreach (Product product in productHelper.GetAllProduct())
+                using (ProductHelper productHelper = new ProductHelper())
                 {
-                    ProductJsonModel productJsonModel = (ProductJsonModel) product;
-                    if (!product.isDisabled)
+                    ICollection<CategoryJsonModel> categoryJsonModels = new List<CategoryJsonModel>();
+                    foreach (Category category in categoryHelper.GetAllCategory())
                     {
-                        productJsonModels.Add(productJsonModel);
+                        ICollection<ProductJsonModel> productJsonModels = new List<ProductJsonModel>();
+                        foreach (Product product in productHelper.GetProductByCaterory(category.ID))
+                        {
+                            productJsonModels.Add((ProductJsonModel)product);
+                        }
+                        CategoryJsonModel categoryJsonModel = (CategoryJsonModel) category;
+                        categoryJsonModel.ProductList = productJsonModels;
+                        categoryJsonModels.Add(categoryJsonModel);
+
                     }
+                    return Ok(categoryJsonModels);
                 }
-                return Ok(productJsonModels);
             }
         }
     }

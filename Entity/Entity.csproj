@@ -54,6 +54,7 @@
       <DependentUpon>TakeCoffee.tt</DependentUpon>
     </Compile>
     <Compile Include="Helper\BaseEntityHelper.cs" />
+    <Compile Include="Helper\CategoryHelper.cs" />
     <Compile Include="Helper\OrderHelper.cs" />
     <Compile Include="Helper\ProductHelper.cs" />
     <Compile Include="Helper\UserHelper.cs" />

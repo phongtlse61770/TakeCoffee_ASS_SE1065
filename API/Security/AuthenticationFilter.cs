@@ -14,6 +14,7 @@ using System.Web.Http.Results;
 using System.Web.Mvc;
 using System.Web.Mvc.Filters;
 using Entity.Helper;
+using Newtonsoft.Json.Linq;
 using ActionFilterAttribute = System.Web.Http.Filters.ActionFilterAttribute;
 
 namespace API.Security
@@ -52,7 +53,14 @@ namespace API.Security
             
             if (!isAllow)
             {
-                actionContext.Response = new HttpResponseMessage(HttpStatusCode.Forbidden);
+                JObject rep = new JObject();
+                rep["message"] = "Access denied";
+                actionContext.Response =
+                    new HttpResponseMessage()
+                    {
+                        StatusCode = HttpStatusCode.Forbidden,
+                        Content = new StringContent(rep.ToString())
+                    };
             }
             base.OnActionExecuting(actionContext);
         }
