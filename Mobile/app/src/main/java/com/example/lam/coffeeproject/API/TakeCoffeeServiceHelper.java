@@ -15,14 +15,13 @@ public class TakeCoffeeServiceHelper {
     }
 
     synchronized public static void checkBalance(Context context){
-        String broadcastName = "checkBalance";
 
         Bundle dataBundle = new Bundle();
         dataBundle.putInt("id",2);
 
         Intent intent = new Intent(context,TakeCoffeeService.class);
         intent.putExtra(TakeCoffeeService.EXTRA_SERVICE_TYPE,TakeCoffeeServiceType.CheckBalance);
-        intent.putExtra(TakeCoffeeService.EXTRA_BROADCAST_NAME,broadcastName);
+//        intent.putExtra(TakeCoffeeService.EXTRA_BROADCAST_NAME,broadcastName);
         intent.putExtra(TakeCoffeeService.EXTRA_BUNDLE,dataBundle);
 
         context.startService(intent);

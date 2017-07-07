@@ -1,13 +1,16 @@
 package com.example.lam.coffeeproject.API.Requests;
 
-import android.support.annotation.RequiresApi;
 import okhttp3.*;
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.IOException;
 
 /**
  * Created by Phong on 7/7/2017.
  */
 public abstract class BaseRequest {
+    protected static OkHttpClient client = new OkHttpClient();
     protected static String ROOT = "http://takecoffeeapi.gear.host/";
     private static MediaType mediaType = MediaType.parse("application/json");
     private String username;
@@ -20,7 +23,7 @@ public abstract class BaseRequest {
 
     abstract String getUri();
 
-    abstract String getJsonBody();
+    abstract String getRequestJsonBody() throws JSONException;
 
     private void buildUrl(Request.Builder builder) {
         builder.url(getUri());
@@ -33,12 +36,12 @@ public abstract class BaseRequest {
                 .addHeader("cache-control", "no-cache");
     }
 
-    private void buildBody(Request.Builder builder) {
-        RequestBody body = RequestBody.create(mediaType, getJsonBody());
+    private void buildBody(Request.Builder builder) throws JSONException {
+        RequestBody body = RequestBody.create(mediaType, getRequestJsonBody());
         builder.post(body);
     }
 
-    protected Request buildRequest() {
+    protected Request buildRequest() throws JSONException {
         Request.Builder builder = new Request.Builder();
         this.buildUrl(builder);
         this.buildHeader(builder);
@@ -46,7 +49,9 @@ public abstract class BaseRequest {
         return builder.build();
     }
 
-    public JSONObject execute() {
-
+    public JSONObject execute() throws IOException, JSONException {
+        Request request = buildRequest();
+        Response response = client.newCall(request).execute();
+        return new JSONObject(response.body().string());
     }
 }
