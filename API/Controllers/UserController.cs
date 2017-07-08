@@ -80,7 +80,7 @@ namespace API.Controllers
             //---------------------------------------------
             using (UserHelper userHelper = new UserHelper())
             {
-                bool isSuccess = userHelper.CreateUser(username, password, phonenumber);
+                bool isSuccess = userHelper.CreateUser(username, password, phonenumber,false);
                 dynamic response = new JObject();
                 response["result"] = isSuccess;
                 return Ok(response);

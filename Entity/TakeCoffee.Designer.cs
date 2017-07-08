@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'E:\Project\TakeCoffee\TakeCoffee_ASS_SE1065\Entity\TakeCoffee.edmx'. 
+﻿// T4 code generation is enabled for model 'D:\Project\Web\TakeCoffee_ASS_SE1065\Entity\TakeCoffee.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

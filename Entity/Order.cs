@@ -23,9 +23,10 @@ namespace Entity
         public Nullable<System.DateTime> createdTime { get; set; }
         public Nullable<int> employeeID { get; set; }
         public Nullable<int> customerID { get; set; }
+        public bool isConfirmed { get; set; }
     
-        public virtual User User { get; set; }
-        public virtual User User1 { get; set; }
+        public virtual User customer { get; set; }
+        public virtual User employee { get; set; }
         public virtual ICollection<OrderProduct> OrderProducts { get; set; }
     }
 }

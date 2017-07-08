@@ -23,7 +23,7 @@ namespace Admin.Controllers
                 bool isAllow = false;
 
                 UserHelper userHelper = new UserHelper();
-                isAllow = userHelper.AuthenticateAdmin(username, password);
+                isAllow = userHelper.AuthenticateEmployee(username, password);
 
 
                 userHelper.Dispose();

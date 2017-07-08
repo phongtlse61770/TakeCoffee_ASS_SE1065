@@ -20,6 +20,7 @@
           <Property Name="createdTime" Type="datetime" />
           <Property Name="employeeID" Type="int" />
           <Property Name="customerID" Type="int" />
+          <Property Name="isConfirmed" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="OrderProduct">
           <Key>
@@ -61,7 +62,7 @@
           <Property Name="username" Type="nvarchar" MaxLength="255" />
           <Property Name="password" Type="nvarchar" MaxLength="255" />
           <Property Name="phonenumber" Type="nchar" MaxLength="10" />
-          <Property Name="isAdmin" Type="bit" />
+          <Property Name="isEmployee" Type="bit" />
           <Property Name="balance" Type="decimal" Precision="19" Scale="4" />
         </EntityType>
         <Association Name="FK_Order_Customer">
@@ -200,8 +201,9 @@
           <Property Name="createdTime" Type="DateTime" Precision="3" />
           <Property Name="employeeID" Type="Int32" />
           <Property Name="customerID" Type="Int32" />
-          <NavigationProperty Name="User" Relationship="TakeCoffeeModel.FK_Order_Customer" FromRole="Order" ToRole="User" />
-          <NavigationProperty Name="User1" Relationship="TakeCoffeeModel.FK_Order_Employee" FromRole="Order" ToRole="User" />
+          <Property Name="isConfirmed" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="customer" Relationship="TakeCoffeeModel.FK_Order_Customer" FromRole="Order" ToRole="User" />
+          <NavigationProperty Name="employee" Relationship="TakeCoffeeModel.FK_Order_Employee" FromRole="Order" ToRole="User" />
           <NavigationProperty Name="OrderProducts" Relationship="TakeCoffeeModel.FK_OrderProduct_Order" FromRole="Order" ToRole="OrderProduct" />
         </EntityType>
         <EntityType Name="OrderProduct">
@@ -248,10 +250,8 @@
           <Property Name="username" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="phonenumber" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="isAdmin" Type="Boolean" />
+          <Property Name="isEmployee" Type="Boolean" />
           <Property Name="balance" Type="Decimal" Precision="19" Scale="4" />
-          <NavigationProperty Name="Orders" Relationship="TakeCoffeeModel.FK_Order_Customer" FromRole="User" ToRole="Order" />
-          <NavigationProperty Name="Orders1" Relationship="TakeCoffeeModel.FK_Order_Employee" FromRole="User" ToRole="Order" />
         </EntityType>
         <Association Name="FK_Product_Category">
           <End Type="TakeCoffeeModel.Category" Role="Category" Multiplicity="0..1" />
@@ -330,6 +330,7 @@
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="TakeCoffeeModel.Order">
               <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="isConfirmed" ColumnName="isConfirmed" />
                 <ScalarProperty Name="customerID" ColumnName="customerID" />
                 <ScalarProperty Name="employeeID" ColumnName="employeeID" />
                 <ScalarProperty Name="createdTime" ColumnName="createdTime" />
@@ -376,7 +377,7 @@
             <EntityTypeMapping TypeName="TakeCoffeeModel.User">
               <MappingFragment StoreEntitySet="User">
                 <ScalarProperty Name="balance" ColumnName="balance" />
-                <ScalarProperty Name="isAdmin" ColumnName="isAdmin" />
+                <ScalarProperty Name="isEmployee" ColumnName="isEmployee" />
                 <ScalarProperty Name="phonenumber" ColumnName="phonenumber" />
                 <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="username" ColumnName="username" />

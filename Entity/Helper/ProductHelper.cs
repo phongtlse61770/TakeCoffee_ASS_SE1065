@@ -15,11 +15,19 @@ namespace Entity.Helper
             return db.Products.ToList<Product>();
         }
 
-        public ICollection<Product> GetProductByCaterory(int categoryID)
+        public ICollection<Product> GetProductByCaterory(int categoryId)
         {
             return db.Products
-                .Where(product => product.categoryID == categoryID)
+                .Where(product => product.categoryID == categoryId)
                 .ToList<Product>();
+        }
+
+        public bool CreateProduct(string name,int categoryID, Decimal unitPrice, Uri image)
+        {
+            Product product = new Product
+            {
+//                name = 
+            };
         }
     }
 }

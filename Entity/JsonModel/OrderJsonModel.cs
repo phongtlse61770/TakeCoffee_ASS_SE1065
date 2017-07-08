@@ -46,8 +46,8 @@ namespace Entity.JsonModel
             {
                 ID = order.ID,
                 CreatedTime = order.createdTime,
-                Employee = order.User1,
-                Customer = order.User,
+                Employee = order.employee,
+                Customer = order.customer,
                 ProductJsonModels = productJsonModels
             };
         }
