@@ -8,17 +8,17 @@ namespace Entity.Helper
         public bool Authenticate(string username, string password)
         {
             bool isSuccess = db.Users
-                                 .Where(user => user.username.Equals(username))
-                                 .Any(user => user.password.Equals(password));
+                .Where(user => user.username.Equals(username))
+                .Any(user => user.password.Equals(password));
             return isSuccess;
         }
 
         public bool AuthenticateEmployee(string username, string password)
         {
             bool isSuccess = db.Users
-                                 .Where(user => user.username.Equals(username))
-                                 .Where(user => user.password.Equals(password))
-                                 .Any(user => user.isEmployee == true);
+                .Where(user => user.username.Equals(username))
+                .Where(user => user.password.Equals(password))
+                .Any(user => user.isEmployee == true);
             return isSuccess;
         }
 
@@ -26,7 +26,7 @@ namespace Entity.Helper
         {
             bool isSuccess = false;
             bool isDuplicatedUsername = db.Users
-                                            .Any(user => user.username == username );
+                .Any(user => user.username == username);
             if (!isDuplicatedUsername)
             {
                 User newUser = new User
@@ -45,19 +45,16 @@ namespace Entity.Helper
             return isSuccess;
         }
 
-        public bool AddBalance(int userId , decimal balance)
+        public bool AddBalance(int userId, decimal balance)
         {
             bool isSuccess = false;
 
-            try
+            var find = db.Users.Find(userId);
+            if (find != null)
             {
-                db.Users.Find(userId).balance += balance;
+                find.balance += balance;
                 db.SaveChanges();
                 isSuccess = true;
-            }
-            catch (InvalidOperationException)
-            {
-                //Do nothing   
             }
 
             return isSuccess;
@@ -67,20 +64,17 @@ namespace Entity.Helper
         {
             bool isSuccess = false;
 
-            try
+            var find = db.Users.Find(userId);
+            if (find != null)
             {
-                db.Users.Find(userId).balance -= balance;
+                find.balance -= balance;
                 db.SaveChanges();
                 isSuccess = true;
-            }
-            catch (InvalidOperationException)
-            {
-                //Do nothing   
             }
 
             return isSuccess;
         }
-        
+
         public decimal GetBalance(int id)
         {
             var user = db.Users.Find(id);
@@ -91,6 +85,5 @@ namespace Entity.Helper
             }
             throw new Exception($"User with id {id} not existed");
         }
-        
     }
 }

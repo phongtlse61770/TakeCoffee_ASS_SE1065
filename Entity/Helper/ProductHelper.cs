@@ -24,10 +24,11 @@ namespace Entity.Helper
 
         public bool CreateProduct(string name,int categoryID, Decimal unitPrice, Uri image)
         {
-            Product product = new Product
-            {
-//                name = 
-            };
+//            Product product = new Product
+//            {
+////                name = 
+//            };
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Test</title>
+    <style>
+        .fluid-container {
+            text-align: center
+        }
+         #fileForm {
+             padding: 20px;
+             display: inline-block;
+         }
+        #fileForm > input {
+            display:inline !important
+        }
+    </style>
+</head>
+<body>
+<div>
+    <div class="fluid-container">
+        @{
+            IDictionary<string, object> formAttr = new Dictionary<string, object>
+            {
+                {"id", "fileForm"},
+                {"enctype", "multipart/form-data"}
+            };
+        }
+        @using (Html.BeginForm("Index", "Test", FormMethod.Post, formAttr))
+        {
+            <input type="file" name="file">
+            <input type="submit" value="OK" class="btn btn-primary"/>
+        }
+        <br/>
+        <span>File will be in Admin/App_Data/images</span>
+        <br/>
+        <span>Only save file name to DB</span>
+    </div>
+   
+</div>
+<script>
+
+</script>
+</body>
+</html>

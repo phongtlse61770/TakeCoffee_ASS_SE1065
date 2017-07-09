@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,21 +24,38 @@ namespace Entity.Helper
             return totalPrice;
         }
 
-        public Decimal CalculateOrderPrice(Order order,decimal shipfee)
+        public Decimal CalculateOrderPrice(Order order, decimal shipfee)
         {
             return CalculateOrderPrice(order) + shipfee;
         }
 
         /// <summary>
-        /// Add new order
+        /// 
         /// </summary>
-        /// <param name="productList">productID,quantity </param>
-        /// <param name="userID"></param>
-        /// <param name="employeeID"></param>
+        /// <param name="productList">include the product entity and its quantity</param>
+        /// <param name="customerId"></param>
+        /// <param name="employeeId"></param>
         /// <returns></returns>
-        public static int CreateOrder(IDictionary<int, int> productList, int userID, int employeeID)
+        public Order CreateOrder(IDictionary<Product,int> productList, int customerId, int employeeId)
         {
-            return 0;
+            try
+            {
+                Order order = new Order
+                {
+                    createdTime = DateTime.Now,
+                    customerID = customerId,
+                    employeeID = employeeId,
+                    isConfirmed = false
+                };
+                
+                db.Orders.Add(order);
+                db.SaveChanges();
+                return order;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
     }
 }
