@@ -18,6 +18,14 @@ namespace Entity.Helper
             return username.Equals("Admin");
         }
 
+        public bool AuthenticateEmployee(string username, string password)
+        {
+            bool isSuccess = db.Users
+                .Where(user => user.username.Equals(username))
+                .Where(user => user.password.Equals(password))
+                .Any(user => user.isEmployee == true);
+            return isSuccess;
+        }
 
         public User CreateUser(string username, string password, string phonenumber, bool isEmployee)
         {

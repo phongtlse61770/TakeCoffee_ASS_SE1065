@@ -24,6 +24,7 @@ namespace Admin.Controllers
 
                 UserHelper userHelper = new UserHelper();
                 isAllow = userHelper.AuthenticateEmployee(username, password);
+                
 
 
                 userHelper.Dispose();
