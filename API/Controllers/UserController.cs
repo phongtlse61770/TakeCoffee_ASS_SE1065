@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using Entity;
 using Entity.Helper;
 using Newtonsoft.Json.Linq;
 
@@ -80,9 +81,9 @@ namespace API.Controllers
             //---------------------------------------------
             using (UserHelper userHelper = new UserHelper())
             {
-                bool isSuccess = userHelper.CreateUser(username, password, phonenumber,false);
+                User user = userHelper.CreateUser(username, password, phonenumber,false);
                 dynamic response = new JObject();
-                response["result"] = isSuccess;
+                response["result"] = user != null;
                 return Ok(response);
             }
         }
