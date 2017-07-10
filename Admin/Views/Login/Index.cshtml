@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+</head>
+<body>
+    <form class="login-form" runat="server" id="loginForm">
+        <div class="login-title">COFFEE</div>
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                <asp:TextBox ID="txtUsername" runat="server" MaxLength="40" CssClass="form-control" placeholder="Username"></asp:TextBox>
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                <asp:TextBox ID="txtPassword" runat="server" MaxLength="40" CssClass="form-control" placeholder="Password"></asp:TextBox>
+            </div>
+            <asp:Button CssClass="btn btn-primary glyphicon glyphicon-log-in submit-button" ID="btnLogin" runat="server" Text="Login" OnClick="Page_Load"
+                        CausesValidation="false" Width="6em" />
+        </div>
+    </form>
+</body>
+</html>
