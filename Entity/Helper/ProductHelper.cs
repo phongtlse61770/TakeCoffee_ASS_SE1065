@@ -44,6 +44,17 @@ namespace Entity.Helper
             }
         }
 
+        /// <summary>
+        /// Update product with [id] with giving value
+        /// The value that not want to be update can be left null
+        /// Set use default value if want to remove it
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="categoryId"></param>
+        /// <param name="unitPrice"></param>
+        /// <param name="image"></param>
+        /// <returns></returns>
         public bool UpdateProduct(int id, string name, int? categoryId, decimal? unitPrice, Uri image)
         {
             try
@@ -81,9 +92,18 @@ namespace Entity.Helper
 
         public bool RemoveProduct(int id)
         {
-            throw new NotImplementedException();
+            bool isSuccess = false;
+            try
+            {
+                Product product = db.Products.Find(id);
+                if (product != null)
+                {
+                    db.Products.Remove(product);
+                    int affectedRecord = db.SaveChanges();
+                    isSuccess = affectedRecord == 1;
+                }
+            }catch(Exception){}
+            return isSuccess;
         }
-        
-        
     }
 }

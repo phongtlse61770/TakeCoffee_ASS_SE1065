@@ -13,13 +13,9 @@ namespace Entity.Helper
             return isSuccess;
         }
 
-        public bool AuthenticateAdmin(string username, string password)
+        public bool IsAdmin(string username)
         {
-            bool isSuccess = db.Users
-                .Where(user => user.username.Equals(username))
-                .Where(user => user.password.Equals(password))
-                .Any(user => user.isEmployee == true);
-            return isSuccess;
+            return username.Equals("Admin");
         }
 
 
@@ -85,7 +81,6 @@ namespace Entity.Helper
             }
             catch (Exception)
             {
-                
             }
             return false;
         }
