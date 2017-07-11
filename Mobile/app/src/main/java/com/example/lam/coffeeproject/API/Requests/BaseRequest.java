@@ -1,26 +1,21 @@
 package com.example.lam.coffeeproject.API.Requests;
 
+import android.os.Parcelable;
+import android.util.Log;
 import okhttp3.*;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-
 /**
  * Created by Phong on 7/7/2017.
  */
-public abstract class BaseRequest {
-    protected static OkHttpClient client = new OkHttpClient();
+public abstract class BaseRequest implements Parcelable {
+    private static OkHttpClient client = new OkHttpClient();
     protected static String ROOT = "http://takecoffeeapi.gear.host/";
-    private static MediaType mediaType = MediaType.parse("application/json");
-    private String username;
-    private String password;
+    private MediaType mediaType = MediaType.parse("application/json");
+    protected String username;
+    protected String password;
     protected JSONObject responseBody;
-
-    public BaseRequest(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
 
     abstract String getUri();
 
@@ -30,11 +25,13 @@ public abstract class BaseRequest {
         builder.url(getUri());
     }
 
-    private void buildHeader(Request.Builder builder) {
-        builder.addHeader("username", username)
-                .addHeader("password", password)
+    private void buildHeader(Request.Builder builder) throws Exception {
+        builder
                 .addHeader("content-type", "application/json")
                 .addHeader("cache-control", "no-cache");
+        if (username != null && password != null) {
+            builder.addHeader("username", username).addHeader("password", password);
+        }
     }
 
     private void buildBody(Request.Builder builder) throws JSONException {
@@ -42,7 +39,7 @@ public abstract class BaseRequest {
         builder.post(body);
     }
 
-    protected Request buildRequest() throws JSONException {
+    protected Request buildRequest() throws Exception {
         Request.Builder builder = new Request.Builder();
         this.buildUrl(builder);
         this.buildHeader(builder);
@@ -50,9 +47,15 @@ public abstract class BaseRequest {
         return builder.build();
     }
 
-    public void execute() throws IOException, JSONException {
-        Request request = buildRequest();
-        Response response = client.newCall(request).execute();
-        responseBody = new JSONObject(response.body().string());
+    public boolean execute() {
+        try {
+            Request request = buildRequest();
+            Response response = client.newCall(request).execute();
+            responseBody = new JSONObject(response.body().string());
+            return true;
+        } catch (Exception ex) {
+            Log.e(BaseRequest.class.getSimpleName(), ex.getMessage());
+            return false;
+        }
     }
 }

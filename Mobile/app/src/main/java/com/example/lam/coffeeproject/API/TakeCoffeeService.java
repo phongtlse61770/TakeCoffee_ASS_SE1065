@@ -3,12 +3,8 @@ package com.example.lam.coffeeproject.API;
 import android.app.IntentService;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import com.example.lam.coffeeproject.API.Requests.GetBalanceRequest;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
+import android.os.ResultReceiver;
+import com.example.lam.coffeeproject.API.Requests.BaseRequest;
 
 /**
  * Created by Phong on 7/5/2017.
@@ -16,9 +12,8 @@ import java.io.IOException;
 public class TakeCoffeeService extends IntentService {
     static String SERVICE_NAME = "TakeCoffeeService";
 
-    public static String EXTRA_SERVICE_TYPE = "EXTRA_SERVICE_TYPE";
-    public static String EXTRA_BUNDLE = "EXTRA_BUNDLE";
-//    public static String EXTRA_BROADCAST_NAME = "EXTRA_BROADCAST_NAME";
+    public static String EXTRA_REQUEST = "EXTRA_REQUEST";
+    public static String EXTRA_CALLBACK = "EXTRA_CALLBACK";
 
     public TakeCoffeeService() {
         super(TakeCoffeeService.SERVICE_NAME);
@@ -26,39 +21,13 @@ public class TakeCoffeeService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        Log.d("TakeCoffeeService","something");
-        TakeCoffeeServiceType serviceType = (TakeCoffeeServiceType) intent.getSerializableExtra(TakeCoffeeService.EXTRA_SERVICE_TYPE);
-        Bundle dataBundle = intent.getBundleExtra(TakeCoffeeService.EXTRA_BUNDLE);
-//        String broadcastName = intent.getStringExtra(TakeCoffeeService.EXTRA_BROADCAST_NAME);
+        BaseRequest request = intent.getParcelableExtra(TakeCoffeeService.EXTRA_REQUEST);
+        ResultReceiver callback = intent.getParcelableExtra(TakeCoffeeService.EXTRA_CALLBACK);
 
-        try {
-            switch (serviceType) {
-                case CheckLogin:
-
-                    break;
-                case CheckBalance:
-                    getBalance(dataBundle);
-
-                    break;
-            }
-        } catch (IOException | JSONException e) {
-            Log.e(TakeCoffeeService.class.getSimpleName(), e.getMessage());
+        if (request.execute()) {
+            Bundle bundle = new Bundle();
+            bundle.putParcelable(EXTRA_REQUEST,request);
+            callback.send(0,bundle);
         }
-    }
-
-    private void getBalance(Bundle dataBundle) throws IOException, JSONException {
-        int id = dataBundle.getInt("id");
-
-        GetBalanceRequest request = new GetBalanceRequest(id);
-        request.execute();
-
-        double balance = request.getBalance();
-        //---------------------
-        Bundle resultBundle = new Bundle();
-        resultBundle.putDouble(GetBalanceRequest.BUNDLE_BALANCE,balance);
-
-        Intent intent = new Intent(GetBalanceRequest.REQUEST_NAME);
-        intent.putExtra(TakeCoffeeService.EXTRA_BUNDLE, resultBundle);
-        sendBroadcast(intent);
     }
 }

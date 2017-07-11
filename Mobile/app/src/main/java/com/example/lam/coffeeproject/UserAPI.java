@@ -1,11 +1,10 @@
 package com.example.lam.coffeeproject;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.ResultReceiver;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 import com.example.lam.coffeeproject.API.Requests.GetBalanceRequest;
@@ -14,36 +13,29 @@ import com.example.lam.coffeeproject.API.TakeCoffeeServiceHelper;
 
 public class UserAPI extends AppCompatActivity {
 
-    IntentFilter filter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_api);
-
-        filter = new IntentFilter(GetBalanceRequest.REQUEST_NAME);
-        filter.addCategory(Intent.CATEGORY_DEFAULT);
     }
 
-    private BroadcastReceiver receiver = new BroadcastReceiver() {
+    ResultReceiver balanceResultReceiver = new ResultReceiver(null) {
         @Override
-        public void onReceive(Context context, Intent intent) {
-            Bundle bundle = intent.getBundleExtra(TakeCoffeeService.EXTRA_BUNDLE);
-            Double balance = bundle.getDouble(GetBalanceRequest.BUNDLE_BALANCE);
-
-            Toast.makeText(UserAPI.this, "" + balance, Toast.LENGTH_SHORT).show();
+        protected void onReceiveResult(int resultCode, Bundle resultData) {
+            GetBalanceRequest getBalanceRequest = resultData.getParcelable(TakeCoffeeService.EXTRA_REQUEST);
+            Log.e(UserAPI.class.getSimpleName(), "asda");
+            try {
+                Toast.makeText(UserAPI.this, "done " + getBalanceRequest.getBalance(), Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                Log.e(UserAPI.class.getSimpleName(), e.getMessage());
+            }
         }
     };
 
 
-    @Override
-    protected void onResume() {
-        registerReceiver(receiver, filter);
-        super.onResume();
-    }
-
     public void CheckWallet(View view) {
-        TakeCoffeeServiceHelper.checkBalance(this, 2);
+        TakeCoffeeServiceHelper.checkBalance(this, 2, balanceResultReceiver);
     }
 
     public void ViewStoreLocation(View view) {
@@ -55,9 +47,4 @@ public class UserAPI extends AppCompatActivity {
         startActivity(i);
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        unregisterReceiver(receiver);
-    }
 }
