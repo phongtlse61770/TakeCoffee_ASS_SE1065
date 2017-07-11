@@ -59,6 +59,7 @@
     <Compile Include="Helper\OrderProductHelper.cs" />
     <Compile Include="Helper\ProductHelper.cs" />
     <Compile Include="Helper\UserHelper.cs" />
+    <Compile Include="Helper\UtilityHelper.cs" />
     <Compile Include="JsonModel\CategoryJsonModel.cs" />
     <Compile Include="JsonModel\OrderJsonModel.cs" />
     <Compile Include="JsonModel\ProductJsonModel.cs" />

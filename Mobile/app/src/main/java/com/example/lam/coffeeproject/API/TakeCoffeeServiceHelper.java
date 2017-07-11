@@ -14,10 +14,10 @@ public class TakeCoffeeServiceHelper {
 
     }
 
-    synchronized public static void checkBalance(Context context){
+    synchronized public static void checkBalance(Context context,int id){
 
         Bundle dataBundle = new Bundle();
-        dataBundle.putInt("id",2);
+        dataBundle.putInt("id",id);
 
         Intent intent = new Intent(context,TakeCoffeeService.class);
         intent.putExtra(TakeCoffeeService.EXTRA_SERVICE_TYPE,TakeCoffeeServiceType.CheckBalance);

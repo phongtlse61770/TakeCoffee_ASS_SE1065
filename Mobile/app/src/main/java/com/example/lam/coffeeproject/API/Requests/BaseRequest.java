@@ -15,6 +15,7 @@ public abstract class BaseRequest {
     private static MediaType mediaType = MediaType.parse("application/json");
     private String username;
     private String password;
+    protected JSONObject responseBody;
 
     public BaseRequest(String username, String password) {
         this.username = username;
@@ -49,9 +50,9 @@ public abstract class BaseRequest {
         return builder.build();
     }
 
-    public JSONObject execute() throws IOException, JSONException {
+    public void execute() throws IOException, JSONException {
         Request request = buildRequest();
         Response response = client.newCall(request).execute();
-        return new JSONObject(response.body().string());
+        responseBody = new JSONObject(response.body().string());
     }
 }

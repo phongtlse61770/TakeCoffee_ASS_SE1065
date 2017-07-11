@@ -30,6 +30,7 @@ namespace API.Security
             switch (action.ToLower())
             {
                 case "checklogin":
+                case "checkloginemployee":
                 case "create":
                     isAllow = true;
                     break;

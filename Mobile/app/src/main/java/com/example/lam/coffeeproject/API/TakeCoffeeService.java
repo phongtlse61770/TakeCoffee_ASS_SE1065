@@ -49,11 +49,13 @@ public class TakeCoffeeService extends IntentService {
     private void getBalance(Bundle dataBundle) throws IOException, JSONException {
         int id = dataBundle.getInt("id");
 
-        JSONObject jsonObject = new GetBalanceRequest(id).execute();
-        Float balance = Float.parseFloat(jsonObject.get("balance").toString());
+        GetBalanceRequest request = new GetBalanceRequest(id);
+        request.execute();
+
+        double balance = request.getBalance();
         //---------------------
         Bundle resultBundle = new Bundle();
-        resultBundle.putFloat(GetBalanceRequest.BUNDLE_BALANCE,balance);
+        resultBundle.putDouble(GetBalanceRequest.BUNDLE_BALANCE,balance);
 
         Intent intent = new Intent(GetBalanceRequest.REQUEST_NAME);
         intent.putExtra(TakeCoffeeService.EXTRA_BUNDLE, resultBundle);

@@ -14,8 +14,8 @@ import com.example.lam.coffeeproject.API.TakeCoffeeServiceHelper;
 
 public class UserAPI extends AppCompatActivity {
 
-    BroadcastReceiver receiver;
     IntentFilter filter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,17 +23,18 @@ public class UserAPI extends AppCompatActivity {
 
         filter = new IntentFilter(GetBalanceRequest.REQUEST_NAME);
         filter.addCategory(Intent.CATEGORY_DEFAULT);
-        receiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                Bundle bundle = intent.getBundleExtra(TakeCoffeeService.EXTRA_BUNDLE);
-
-                float balance = bundle.getFloat(GetBalanceRequest.BUNDLE_BALANCE);
-                Toast.makeText(UserAPI.this, ""+balance, Toast.LENGTH_SHORT).show();
-            }
-        };
-
     }
+
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Bundle bundle = intent.getBundleExtra(TakeCoffeeService.EXTRA_BUNDLE);
+            Double balance = bundle.getDouble(GetBalanceRequest.BUNDLE_BALANCE);
+
+            Toast.makeText(UserAPI.this, "" + balance, Toast.LENGTH_SHORT).show();
+        }
+    };
+
 
     @Override
     protected void onResume() {
@@ -42,7 +43,7 @@ public class UserAPI extends AppCompatActivity {
     }
 
     public void CheckWallet(View view) {
-        TakeCoffeeServiceHelper.checkBalance(this);
+        TakeCoffeeServiceHelper.checkBalance(this, 2);
     }
 
     public void ViewStoreLocation(View view) {

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Http;
 using Entity;
 using Entity.Helper;
+using Entity.JsonModel;
 using Newtonsoft.Json.Linq;
 
 namespace API.Controllers
@@ -57,6 +58,46 @@ namespace API.Controllers
                 dynamic response = new JObject();
                 response["result"] = isSuccess;
                 return Ok(response);
+            }
+        }
+        
+        [HttpPost]
+        [Route("checkloginEmployee")]
+        public IHttpActionResult CheckLoginEmployee([FromBody] JObject jsonObject)
+        {
+            string username;
+            string password;
+            try
+            {
+                username = jsonObject["username"].Value<string>();
+                password = jsonObject["password"].Value<string>();
+            }
+            catch (Exception)
+            {
+                return BadRequest("Invalid request");
+            }
+            //--------------------------
+            using (UserHelper userHelper = new UserHelper())
+            {
+                bool isSuccess = userHelper.AuthenticateEmployee(username, password);
+                dynamic response = new JObject();
+                response["result"] = isSuccess;
+                return Ok(response);
+            }
+        }
+        
+        [HttpPost]
+        [Route("getProfile")]
+        public IHttpActionResult GetProfile()
+        {
+            string username = Request.Headers.GetValues("username").First();
+            string password = Request.Headers.GetValues("username").First();
+            
+            using (UserHelper userHelper = new UserHelper())
+            {
+                User user = userHelper.GetUser(username,password);
+                
+                return Ok((UserJsonModel)user);
             }
         }
 

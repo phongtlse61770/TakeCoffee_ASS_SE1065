@@ -19,7 +19,7 @@ namespace Entity.JsonModel
         [JsonProperty("balance")]
         public decimal? balance { get; set; }
 
-        public static implicit operator UserJsonModel(User user)
+        private static UserJsonModel FromEntity(User user)
         {
             return new UserJsonModel
             {
@@ -28,6 +28,11 @@ namespace Entity.JsonModel
                 phonenumber = user.phonenumber,
                 balance = user.balance
             };
+        }
+
+        public static implicit operator UserJsonModel(User user)
+        {
+            return FromEntity(user);
         }
     }
 }

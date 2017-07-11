@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Entity.Helper
@@ -25,6 +26,19 @@ namespace Entity.Helper
                 .Where(user => user.password.Equals(password))
                 .Any(user => user.isEmployee == true);
             return isSuccess;
+        }
+
+        public User GetUser(string username, string password)
+        {
+            User found = db.Users
+                .Where(user => user.username.Equals(username))
+                .FirstOrDefault(user => user.password.Equals(password));
+            return found;
+        }
+        
+        public ICollection<User>GetAllUser()
+        {
+            return db.Users.ToList();
         }
 
         public User CreateUser(string username, string password, string phonenumber, bool isEmployee)
