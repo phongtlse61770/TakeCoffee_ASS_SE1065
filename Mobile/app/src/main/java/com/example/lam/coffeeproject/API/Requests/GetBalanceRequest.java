@@ -16,9 +16,8 @@ public class GetBalanceRequest extends BaseRequest {
         return responseBody.getDouble("balance");
     }
 
-    private int userId;
-    public GetBalanceRequest(int id) {
-        this.userId = id;
+    public GetBalanceRequest() {
+
     }
 
     @Override
@@ -30,7 +29,6 @@ public class GetBalanceRequest extends BaseRequest {
     @Override
     String getRequestJsonBody() throws JSONException {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("id",userId);
         return jsonObject.toString();
     }
 

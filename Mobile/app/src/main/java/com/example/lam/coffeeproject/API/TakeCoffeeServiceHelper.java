@@ -15,9 +15,9 @@ public class TakeCoffeeServiceHelper {
 
     }
 
-    synchronized public static void checkBalance(Context context, int id, ResultReceiver resultReceiver){
+    synchronized public static void checkBalance(Context context,ResultReceiver resultReceiver){
 
-        GetBalanceRequest getBalanceRequest = new GetBalanceRequest(id);
+        GetBalanceRequest getBalanceRequest = new GetBalanceRequest();
 
         Intent intent = new Intent(context,TakeCoffeeService.class);
         intent.putExtra(TakeCoffeeService.EXTRA_REQUEST,getBalanceRequest);

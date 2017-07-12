@@ -46,7 +46,9 @@ public class CheckLoginRequest extends BaseRequest{
         dest.writeString(this.inputPassword);
         dest.writeString(this.username);
         dest.writeString(this.password);
-        dest.writeString(this.responseBody.toString());
+        if(this.responseBody != null){
+            dest.writeString(this.responseBody.toString());
+        }
     }
 
     protected CheckLoginRequest(Parcel in) {

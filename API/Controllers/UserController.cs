@@ -15,21 +15,14 @@ namespace API.Controllers
     {
         [HttpPost]
         [Route("balance")]
-        public IHttpActionResult GetBalance([FromBody] JObject obj)
+        public IHttpActionResult GetBalance()
         {
-            int id;
-            try
-            {
-                id = obj["id"].Value<int>();
-            }
-            catch (Exception)
-            {
-                return BadRequest("Invalid request");
-            }
-            //--------------------------
+            string username = Request.Headers.GetValues("username").First();
+            string password = Request.Headers.GetValues("password").First();
+
             using (UserHelper userHelper = new UserHelper())
             {
-                Decimal balance = userHelper.GetBalance(id);
+                Decimal balance = userHelper.GetBalance(username,password);
                 dynamic response = new JObject();
                 response["balance"] = balance;
                 return Ok(response);

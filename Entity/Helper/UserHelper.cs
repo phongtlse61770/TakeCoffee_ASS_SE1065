@@ -35,8 +35,8 @@ namespace Entity.Helper
                 .FirstOrDefault(user => user.password.Equals(password));
             return found;
         }
-        
-        public ICollection<User>GetAllUser()
+
+        public ICollection<User> GetAllUser()
         {
             return db.Users.ToList();
         }
@@ -137,15 +137,19 @@ namespace Entity.Helper
             return isSuccess;
         }
 
-        public decimal GetBalance(int id)
+        public decimal GetBalance(string username, string password)
         {
-            var user = db.Users.Find(id);
-            if (user?.balance != null)
+            var foundUser = db.Users
+                .Where(user => user.username.Equals(username))
+                .FirstOrDefault(user => user.password.Equals(password));
+
+            if (foundUser?.balance != null)
             {
-                Decimal balance = user.balance.Value;
+                Decimal balance = foundUser.balance.Value;
                 return balance;
             }
-            throw new Exception($"User with id {id} not existed");
+
+            throw new Exception($"User not existed");
         }
     }
 }
