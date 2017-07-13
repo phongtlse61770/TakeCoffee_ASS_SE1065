@@ -16,8 +16,14 @@ public class CheckLoginRequest extends BaseRequest{
         this.inputPassword = password;
     }
 
-    private boolean isLoginSuccess() throws JSONException {
-        return responseBody.getBoolean("result");
+    public boolean isLoginSuccess() throws JSONException {
+        boolean isSuccess = responseBody.getBoolean("result");
+        return isSuccess;
+    }
+
+    public void ActiveLogin(){
+        this.username = inputUsername;
+        this.password = inputPassword;
     }
 
     @Override

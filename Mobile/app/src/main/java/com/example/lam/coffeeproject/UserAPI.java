@@ -34,18 +34,6 @@ public class UserAPI extends AppCompatActivity {
 
 
     public void CheckWallet(View view) {
-        ResultReceiver balanceResultReceiver = new ResultReceiver(null) {
-            @Override
-            protected void onReceiveResult(int resultCode, Bundle resultData) {
-                GetBalanceRequest getBalanceRequest = resultData.getParcelable(TakeCoffeeService.EXTRA_REQUEST);
-                try {
-                    Toast.makeText(UserAPI.this, "done " + getBalanceRequest.getBalance(), Toast.LENGTH_SHORT).show();
-                } catch (Exception e) {
-                    Log.e(UserAPI.class.getSimpleName(), e.getMessage());
-                }
-            }
-        };
-
         TakeCoffeeServiceHelper.checkBalance(this, balanceResultReceiver);
     }
 

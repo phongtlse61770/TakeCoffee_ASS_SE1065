@@ -10,8 +10,6 @@ import java.io.IOException;
  * Created by Phong on 7/6/2017.
  */
 public class GetBalanceRequest extends BaseRequest {
-    public static String REQUEST_NAME = "GET_BALANCE_REQUEST";
-
     public double getBalance() throws JSONException, IOException {
         return responseBody.getDouble("balance");
     }
@@ -39,7 +37,6 @@ public class GetBalanceRequest extends BaseRequest {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.userId);
         dest.writeString(this.username);
         dest.writeString(this.password);
         if(this.responseBody != null){
@@ -48,7 +45,6 @@ public class GetBalanceRequest extends BaseRequest {
     }
 
     protected GetBalanceRequest(Parcel in) {
-        this.userId = in.readInt();
         this.username = in.readString();
         this.password = in.readString();
         try{

@@ -11,6 +11,7 @@ import org.json.JSONObject;
  */
 public abstract class BaseRequest implements Parcelable {
     private static OkHttpClient client = new OkHttpClient();
+//    protected static String ROOT = "http://takecoffeeapi.gear.host/";
     protected static String ROOT = "http://takecoffeeapi.gear.host/";
     private MediaType mediaType = MediaType.parse("application/json");
     protected String username;
