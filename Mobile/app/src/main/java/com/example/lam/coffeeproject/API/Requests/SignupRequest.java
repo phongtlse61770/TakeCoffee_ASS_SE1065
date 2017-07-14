@@ -45,8 +45,6 @@ public class SignupRequest extends BaseRequest {
         dest.writeString(this.usernameInput);
         dest.writeString(this.passwordInput);
         dest.writeString(this.phonenumber);
-        dest.writeString(this.username);
-        dest.writeString(this.password);
         if (this.responseBody != null) {
             dest.writeString(this.responseBody.toString());
         }
@@ -56,8 +54,6 @@ public class SignupRequest extends BaseRequest {
         this.usernameInput = in.readString();
         this.passwordInput = in.readString();
         this.phonenumber = in.readString();
-        this.username = in.readString();
-        this.password = in.readString();
         try {
             this.responseBody = in.readParcelable(JSONObject.class.getClassLoader());
         } catch (Exception ex) {

@@ -3,6 +3,7 @@ package com.example.lam.coffeeproject.API.Requests;
 import android.os.Parcelable;
 import android.util.Log;
 import okhttp3.*;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -14,8 +15,8 @@ public abstract class BaseRequest implements Parcelable {
 //    protected static String ROOT = "http://takecoffeeapi.gear.host/";
     protected static String ROOT = "http://takecoffeeapi.gear.host/";
     private MediaType mediaType = MediaType.parse("application/json");
-    protected String username;
-    protected String password;
+    protected static String username;
+    protected static String password;
     protected JSONObject responseBody;
 
     abstract String getUri();
@@ -52,10 +53,18 @@ public abstract class BaseRequest implements Parcelable {
         try {
             Request request = buildRequest();
             Response response = client.newCall(request).execute();
-            responseBody = new JSONObject(response.body().string());
+            String jsonString = response.body().string();
+            //Check for json array that will cause error
+            if(jsonString.startsWith("[")){
+                responseBody = new JSONObject();
+                JSONArray jsonArray = new JSONArray(jsonString);
+                responseBody.put("menu",jsonArray);
+            }else{
+                responseBody = new JSONObject(jsonString);
+            }
             return true;
         } catch (Exception ex) {
-            Log.e(BaseRequest.class.getSimpleName(), ex.getMessage());
+//            Log.e(BaseRequest.class.getSimpleName(), ex.getMessage());
             return false;
         }
     }

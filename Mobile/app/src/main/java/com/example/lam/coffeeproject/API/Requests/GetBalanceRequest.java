@@ -37,16 +37,12 @@ public class GetBalanceRequest extends BaseRequest {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.username);
-        dest.writeString(this.password);
         if(this.responseBody != null){
             dest.writeString(this.responseBody.toString());
         }
     }
 
     protected GetBalanceRequest(Parcel in) {
-        this.username = in.readString();
-        this.password = in.readString();
         try{
             this.responseBody = in.readParcelable(JSONObject.class.getClassLoader());
         }catch (Exception ex){

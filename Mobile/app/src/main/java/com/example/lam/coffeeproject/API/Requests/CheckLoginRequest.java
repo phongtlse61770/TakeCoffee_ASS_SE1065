@@ -21,7 +21,12 @@ public class CheckLoginRequest extends BaseRequest{
         return isSuccess;
     }
 
-    public void ActiveLogin(){
+    public String getUsername(){
+        return inputUsername;
+    }
+
+
+    public void ActiveAllRequestLogin(){
         this.username = inputUsername;
         this.password = inputPassword;
     }
@@ -50,8 +55,6 @@ public class CheckLoginRequest extends BaseRequest{
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.inputUsername);
         dest.writeString(this.inputPassword);
-        dest.writeString(this.username);
-        dest.writeString(this.password);
         if(this.responseBody != null){
             dest.writeString(this.responseBody.toString());
         }
@@ -60,8 +63,6 @@ public class CheckLoginRequest extends BaseRequest{
     protected CheckLoginRequest(Parcel in) {
         this.inputUsername = in.readString();
         this.inputPassword = in.readString();
-        this.username = in.readString();
-        this.password = in.readString();
         try{
             this.responseBody = in.readParcelable(JSONObject.class.getClassLoader());
         }catch (Exception ex){

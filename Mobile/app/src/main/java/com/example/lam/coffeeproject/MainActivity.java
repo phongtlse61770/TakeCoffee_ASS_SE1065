@@ -2,7 +2,9 @@ package com.example.lam.coffeeproject;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Handler;
 import android.os.ResultReceiver;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,19 +25,48 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    ResultReceiver checkLoginResultReceiver = new ResultReceiver(null){
+    ResultReceiver checkLoginResultReceiver = new ResultReceiver(new Handler()){
         @Override
         protected void onReceiveResult(int resultCode, Bundle resultData) {
             super.onReceiveResult(resultCode, resultData);
-
             CheckLoginRequest checkLoginRequest = resultData.getParcelable(TakeCoffeeService.EXTRA_REQUEST);
+
             try {
-                checkLoginRequest.isLoginSuccess();
+                boolean isLoginValid = checkLoginRequest.isLoginSuccess();
+                if(isLoginValid){
+                    loginSuccessHandler(checkLoginRequest);
+                }else{
+                    loginFailHandler(checkLoginRequest);
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
     };
+
+    private void loginSuccessHandler(CheckLoginRequest checkLoginRequest){
+        checkLoginRequest.ActiveAllRequestLogin();
+        Intent i = new Intent(MainActivity.this,UserAPI.class);
+        i.putExtra("username",checkLoginRequest.getUsername());
+        startActivity(i);
+    }
+
+    private void loginFailHandler(CheckLoginRequest checkLoginRequest){
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+        builder1.setMessage("Login fail");
+        builder1.setCancelable(true);
+
+        builder1.setPositiveButton(
+                "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
+    }
 
     public void Login(View view) {
         EditText usernameEditText = (EditText) findViewById(R.id.editText);
@@ -51,14 +82,4 @@ public class MainActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        switch (id){
-            case ERROR_DIALOG:
-                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-                dialogBuilder.setTitle("Error");
-                dialogBuilder.setMessage("`");
-
-        }
-    }
 }

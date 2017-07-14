@@ -6,15 +6,21 @@ import android.os.ResultReceiver;
 import com.example.lam.coffeeproject.API.Requests.BaseRequest;
 import com.example.lam.coffeeproject.API.Requests.CheckLoginRequest;
 import com.example.lam.coffeeproject.API.Requests.GetBalanceRequest;
+import com.example.lam.coffeeproject.API.Requests.GetMenuRequest;
 
 /**
  * Created by Phong on 7/5/2017.
  */
 public class TakeCoffeeServiceHelper {
 
+    synchronized public static void getMenu(Context context,ResultReceiver resultReceiver){
+        GetMenuRequest getMenuRequest = new GetMenuRequest();
 
-    synchronized public static void checkLogin(Context context,ResultReceiver resultReceiver,String username, String pasword){
-        CheckLoginRequest getBalanceRequest = new CheckLoginRequest(username,pasword);
+        sendRequest(context,getMenuRequest,resultReceiver);
+    }
+
+    synchronized public static void checkLogin(Context context,ResultReceiver resultReceiver,String username, String password){
+        CheckLoginRequest getBalanceRequest = new CheckLoginRequest(username,password);
 
         sendRequest(context,getBalanceRequest,resultReceiver);
     }
@@ -29,7 +35,6 @@ public class TakeCoffeeServiceHelper {
         Intent intent = new Intent(context,TakeCoffeeService.class);
         intent.putExtra(TakeCoffeeService.EXTRA_REQUEST,request);
         intent.putExtra(TakeCoffeeService.EXTRA_CALLBACK,resultReceiver);
-
         context.startService(intent);
     }
 }
