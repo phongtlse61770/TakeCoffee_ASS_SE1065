@@ -45,7 +45,6 @@ namespace API.Controllers
                         foreach (Product product in productHelper.GetProductByCaterory(category.ID))
                         {
                             ProductJsonModel productJsonModel = (ProductJsonModel) product;
-                            productJsonModel.Category = null;
                             productJsonModels.Add(productJsonModel);
                         }
                         CategoryJsonModel categoryJsonModel = (CategoryJsonModel) category;

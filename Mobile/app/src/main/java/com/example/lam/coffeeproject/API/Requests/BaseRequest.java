@@ -58,7 +58,7 @@ public abstract class BaseRequest implements Parcelable {
             if(jsonString.startsWith("[")){
                 responseBody = new JSONObject();
                 JSONArray jsonArray = new JSONArray(jsonString);
-                responseBody.put("menu",jsonArray);
+                responseBody.put("array",jsonArray);
             }else{
                 responseBody = new JSONObject(jsonString);
             }
