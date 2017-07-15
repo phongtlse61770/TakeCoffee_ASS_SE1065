@@ -19,6 +19,7 @@
         <activity android:name=".UserAPI"/>
         <activity android:name=".Menu"/>
         <activity android:name=".Signup"/>
+        <activity android:name=".storelocation"></activity>
         <service
                 android:name=".API.TakeCoffeeService"
                 android:exported="false" />
