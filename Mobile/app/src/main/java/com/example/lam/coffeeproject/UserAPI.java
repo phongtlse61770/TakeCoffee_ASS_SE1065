@@ -58,9 +58,9 @@ public class UserAPI extends AppCompatActivity {
     }
 
     public void ViewMenuToday(View view) {
-        TakeCoffeeServiceHelper.getMenu(this,getMenuReceiver);
-//        Intent i = new Intent(this, Menu.class);
-//        startActivity(i);
+//        TakeCoffeeServiceHelper.getMenu(this,getMenuReceiver);
+        Intent i = new Intent(this, Menu.class);
+        startActivity(i);
     }
 
 }

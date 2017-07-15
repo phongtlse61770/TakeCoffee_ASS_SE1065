@@ -17,8 +17,6 @@ import com.example.lam.coffeeproject.API.TakeCoffeeServiceHelper;
 import org.json.JSONException;
 
 public class MainActivity extends AppCompatActivity {
-    private final int ERROR_DIALOG = 0;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
