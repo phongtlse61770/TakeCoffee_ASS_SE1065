@@ -30,7 +30,9 @@ public class UserAPI extends AppCompatActivity {
         protected void onReceiveResult(int resultCode, Bundle resultData) {
             GetMenuRequest getMenuRequest = resultData.getParcelable(TakeCoffeeService.EXTRA_REQUEST);
             try {
-                Toast.makeText(UserAPI.this, "done", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(UserAPI.this, Menu.class);
+                i.putExtra(TakeCoffeeService.EXTRA_REQUEST,getMenuRequest);
+                startActivity(i);
             } catch (Exception e) {
                 Log.e(UserAPI.class.getSimpleName(), e.getMessage());
             }
@@ -72,9 +74,7 @@ public class UserAPI extends AppCompatActivity {
     }
 
     public void ViewMenuToday(View view) {
-//        TakeCoffeeServiceHelper.getMenu(this,getMenuReceiver);
-        Intent i = new Intent(this, Menu.class);
-        startActivity(i);
+        TakeCoffeeServiceHelper.getMenu(this,getMenuReceiver);
     }
 
 }

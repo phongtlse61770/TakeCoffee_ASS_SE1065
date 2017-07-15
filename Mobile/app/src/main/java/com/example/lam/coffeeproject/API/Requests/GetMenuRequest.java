@@ -1,7 +1,9 @@
 package com.example.lam.coffeeproject.API.Requests;
 
 import android.os.Parcel;
+import com.example.lam.coffeeproject.Model.MenuModel;
 import okhttp3.MediaType;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -17,6 +19,15 @@ public class GetMenuRequest extends BaseRequest{
     String getUri() {
         String path = "/product/menu";
         return ROOT + path;
+    }
+
+    public MenuModel getMenu() throws JSONException {
+        JSONArray array = responseBody.getJSONArray("array");
+        return MenuModel.FromJson(array);
+    }
+
+    public String getJsonString() throws JSONException {
+        return responseBody.toString();
     }
 
     @Override
@@ -38,7 +49,7 @@ public class GetMenuRequest extends BaseRequest{
 
     protected GetMenuRequest(Parcel in) {
         try{
-            this.responseBody = in.readParcelable(JSONObject.class.getClassLoader());
+            this.responseBody = new JSONObject(in.readString());
         }catch (Exception ex){
             //Suppress
         }

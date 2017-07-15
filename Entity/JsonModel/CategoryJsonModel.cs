@@ -16,7 +16,7 @@ namespace Entity.JsonModel
         [JsonProperty("name")]
         public String Name { get; set; }
 
-        [JsonProperty("products")] 
+        [JsonProperty("products",NullValueHandling = NullValueHandling.Ignore)] 
         public ICollection<ProductJsonModel> ProductList { get; set; }
 
         internal static CategoryJsonModel FromEntity(Category category)
