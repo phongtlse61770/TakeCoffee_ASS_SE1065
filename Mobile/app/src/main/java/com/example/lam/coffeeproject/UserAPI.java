@@ -67,7 +67,8 @@ public class UserAPI extends AppCompatActivity {
     }
 
     public void ViewStoreLocation(View view) {
-
+        Intent i = new Intent(this, storelocation.class);
+        startActivity(i);
     }
 
     public void ViewMenuToday(View view) {

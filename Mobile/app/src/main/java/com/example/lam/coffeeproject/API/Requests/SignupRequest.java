@@ -19,6 +19,11 @@ public class SignupRequest extends BaseRequest {
         this.phonenumber = phonenumber;
     }
 
+    public boolean getIsSuccess() throws JSONException {
+        boolean isSuccess = responseBody.getBoolean("result");
+        return isSuccess;
+    }
+
     @Override
     String getUri() {
         String path = "/user/create";
