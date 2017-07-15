@@ -47,9 +47,17 @@ namespace API.Controllers
             //--------------------------
             using (UserHelper userHelper = new UserHelper())
             {
-                bool isSuccess = userHelper.Authenticate(username, password);
+                User user = userHelper.GetUser(username, password);
+                bool isSuccess = user != null;
+                bool isEmployee = false;
+                if (isSuccess)
+                {
+                    if (user.isEmployee != null) isEmployee = user.isEmployee.Value;
+                }
+
                 dynamic response = new JObject();
                 response["result"] = isSuccess;
+                response["isEmployee"] = isEmployee;
                 return Ok(response);
             }
         }

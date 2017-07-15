@@ -21,6 +21,11 @@ public class CheckLoginRequest extends BaseRequest{
         return isSuccess;
     }
 
+    public boolean isEmployee() throws JSONException {
+        boolean isEmployee = responseBody.getBoolean("isEmployee");
+        return isEmployee;
+    }
+
     public String getUsername(){
         return inputUsername;
     }
