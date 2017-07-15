@@ -23,7 +23,7 @@ namespace Entity.Helper
                 .ToList();
         }
 
-        public Product CreateProduct(string name, int categoryId, Decimal unitPrice, Uri image)
+        public Product CreateProduct(string name, int categoryId, Decimal unitPrice, string filename)
         {
             try
             {
@@ -32,7 +32,7 @@ namespace Entity.Helper
                     name = name,
                     categoryID = categoryId,
                     unitPrice = unitPrice,
-                    image = Path.GetFileName(image.AbsoluteUri)
+                    image = filename
                 };
                 db.Products.Add(product);
                 db.SaveChanges();
