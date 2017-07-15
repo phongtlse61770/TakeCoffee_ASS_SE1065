@@ -26,7 +26,8 @@
             android:name=".API.TakeCoffeeService"
             android:exported="false" />
 
-        <activity android:name=".LoadingScreenActivity"></activity>
+        <activity android:name=".LoadingScreenActivity"
+            android:noHistory="true"></activity>
     </application>
 
 </manifest>

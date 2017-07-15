@@ -1,9 +1,11 @@
 package com.example.lam.coffeeproject;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -41,7 +43,18 @@ public class UserAPI extends AppCompatActivity {
         protected void onReceiveResult(int resultCode, Bundle resultData) {
             GetBalanceRequest getBalanceRequest = resultData.getParcelable(TakeCoffeeService.EXTRA_REQUEST);
             try {
-                Toast.makeText(UserAPI.this, "done " + getBalanceRequest.getBalance(), Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder balance = new AlertDialog.Builder(UserAPI.this);
+                balance.setMessage("Your wallet: " + getBalanceRequest.getBalance());
+                balance.setCancelable(true);
+                balance.setPositiveButton("OK",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog dialog = balance.create();
+                dialog.show();
             } catch (Exception e) {
                 Log.e(UserAPI.class.getSimpleName(), e.getMessage());
             }
