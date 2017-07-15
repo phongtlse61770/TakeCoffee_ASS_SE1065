@@ -45,8 +45,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void Login(View view) {
-        EditText usernameEditText = (EditText) findViewById(R.id.editText);
-        EditText passwordEditText = (EditText) findViewById(R.id.editText3);
+        EditText usernameEditText = (EditText) findViewById(R.id.txtSignupUsername);
+        EditText passwordEditText = (EditText) findViewById(R.id.txtSignupPassword);
         String username = usernameEditText.getText().toString();
         String password = passwordEditText.getText().toString();
         Intent intent = new Intent(MainActivity.this, LoadingScreenActivity.class);

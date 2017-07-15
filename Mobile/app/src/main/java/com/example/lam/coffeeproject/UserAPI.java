@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.example.lam.coffeeproject.API.Requests.GetBalanceRequest;
 import com.example.lam.coffeeproject.API.Requests.GetMenuRequest;
@@ -21,8 +22,10 @@ public class UserAPI extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        username = getIntent().getStringExtra("username");
         setContentView(R.layout.activity_user_api);
+        username = getIntent().getStringExtra("username");
+        TextView txtLoginName = (TextView) findViewById(R.id.txtLoginName);
+        txtLoginName.setText("Welcome, " + username);
     }
 
     ResultReceiver getMenuReceiver = new ResultReceiver(new Handler()) {
