@@ -21,35 +21,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    }
-
-    ResultReceiver checkLoginResultReceiver = new ResultReceiver(new Handler()){
-        @Override
-        protected void onReceiveResult(int resultCode, Bundle resultData) {
-            super.onReceiveResult(resultCode, resultData);
-            CheckLoginRequest checkLoginRequest = resultData.getParcelable(TakeCoffeeService.EXTRA_REQUEST);
-
-            try {
-                boolean isLoginValid = checkLoginRequest.isLoginSuccess();
-                if(isLoginValid){
-                    loginSuccessHandler(checkLoginRequest);
-                }else{
-                    loginFailHandler(checkLoginRequest);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+        boolean error = getIntent().getBooleanExtra("error", false);
+        if (error) {
+            loginFailHandler();
         }
-    };
-
-    private void loginSuccessHandler(CheckLoginRequest checkLoginRequest){
-        checkLoginRequest.ActiveAllRequestLogin();
-        Intent i = new Intent(MainActivity.this,UserAPI.class);
-        i.putExtra("username",checkLoginRequest.getUsername());
-        startActivity(i);
     }
 
-    private void loginFailHandler(CheckLoginRequest checkLoginRequest){
+    private void loginFailHandler(){
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
         builder1.setMessage("Login fail");
         builder1.setCancelable(true);
@@ -71,8 +49,10 @@ public class MainActivity extends AppCompatActivity {
         EditText passwordEditText = (EditText) findViewById(R.id.editText3);
         String username = usernameEditText.getText().toString();
         String password = passwordEditText.getText().toString();
-
-        TakeCoffeeServiceHelper.checkLogin(this,checkLoginResultReceiver,username,password);
+        Intent intent = new Intent(MainActivity.this, LoadingScreenActivity.class);
+        intent.putExtra("username", username);
+        intent.putExtra("password", password);
+        startActivity(intent);
     }
 
     public void Signup(View view) {
