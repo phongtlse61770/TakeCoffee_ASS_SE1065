@@ -7,17 +7,17 @@
     tools:context="com.example.lam.coffeeproject.UserAPI">
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/btnCheckWallet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/button3"
+        android:layout_below="@+id/btnViewMenu"
         android:text="Check Wallet"
         android:onClick="CheckWallet"
         android:textSize="19dp"/>
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btnViewMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -52,11 +52,11 @@
         android:layout_alignParentStart="true" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btnViewLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="View Store Location"
-        android:layout_below="@+id/button4"
+        android:layout_below="@+id/btnCheckWallet"
         android:layout_alignParentStart="true"
         android:textSize="19dp"
         android:onClick="ViewStoreLocation"/>
@@ -66,6 +66,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/button2"
+        android:layout_below="@+id/btnViewLocation"
         app:srcCompat="@drawable/coffee1" />
 </RelativeLayout>
