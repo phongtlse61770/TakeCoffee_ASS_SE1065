@@ -4,10 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Phong on 7/15/2017.
@@ -39,7 +36,7 @@ public class MenuModel{
             List<ProductModel> productModels = new LinkedList<>();
 
             for (int j = 0; j < categoryProducts.length(); j++) {
-                JSONObject productJson = jsonArray.getJSONObject(i);
+                JSONObject productJson = categoryProducts.getJSONObject(i);
                 productModels.add(ProductModel.FromJson(productJson));
             }
             menu.put(categoryModel,productModels);

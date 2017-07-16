@@ -23,6 +23,7 @@ public class ProductFragment extends Fragment {
 
         Bundle args = getArguments();
         String json = args.getString("productJson");
+
         try {
             this.productModel = ProductModel.FromJson(json);
         } catch (JSONException e) {

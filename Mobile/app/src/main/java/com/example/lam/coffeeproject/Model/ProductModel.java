@@ -16,6 +16,7 @@ public class ProductModel {
     private CategoryModel category;
     private boolean isAvailable;
 
+
     public ProductModel(int ID, String name, double price, CategoryModel category, boolean isAvailable) {
         this.ID = ID;
         this.name = name;
@@ -70,12 +71,22 @@ public class ProductModel {
         double price = jsonObject.getDouble("price");
         JSONObject categoryJson = jsonObject.getJSONObject("category");
         CategoryModel category = CategoryModel.FromJson(categoryJson);
-        boolean isAvailable = jsonObject.getBoolean("ID");
+        boolean isAvailable = jsonObject.getBoolean("isAvailable");
 
         return new ProductModel(ID,name,price,category,isAvailable);
     }
 
     public static ProductModel FromJson(String json) throws JSONException {
         return FromJson(new JSONObject(json));
+    }
+
+    public JSONObject toJson() throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("ID",ID);
+        jsonObject.put("name",name);
+        jsonObject.put("price",price);
+        jsonObject.put("category",category);
+        jsonObject.put("isAvailable",isAvailable);
+        return jsonObject;
     }
 }
