@@ -36,7 +36,7 @@ public class MenuModel{
             List<ProductModel> productModels = new LinkedList<>();
 
             for (int j = 0; j < categoryProducts.length(); j++) {
-                JSONObject productJson = categoryProducts.getJSONObject(i);
+                JSONObject productJson = categoryProducts.getJSONObject(j);
                 productModels.add(ProductModel.FromJson(productJson));
             }
             menu.put(categoryModel,productModels);

@@ -36,4 +36,11 @@ public class CategoryModel {
         String name = jsonObject.getString("name");
         return new CategoryModel(id,name);
     }
+
+    public JSONObject toJson() throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("ID",ID);
+        jsonObject.put("name",name);
+        return jsonObject;
+    }
 }

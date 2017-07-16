@@ -1,8 +1,5 @@
 package com.example.lam.coffeeproject.Model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.util.JsonReader;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -85,7 +82,7 @@ public class ProductModel {
         jsonObject.put("ID",ID);
         jsonObject.put("name",name);
         jsonObject.put("price",price);
-        jsonObject.put("category",category);
+        jsonObject.put("category",category.toJson());
         jsonObject.put("isAvailable",isAvailable);
         return jsonObject;
     }

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CoffeeProject</string>
+    <string name="image_root">CoffeeProject</string>
 </resources>
