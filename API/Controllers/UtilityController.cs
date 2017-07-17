@@ -24,7 +24,7 @@ namespace API.Controllers
                 clientLongitude = jObject["Longitude"].Value<string>();
                 clientLatitude = jObject["Latitude"].Value<string>();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return BadRequest("Invalid request body");
             }

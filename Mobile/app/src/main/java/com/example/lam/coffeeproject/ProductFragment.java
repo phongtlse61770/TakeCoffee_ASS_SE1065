@@ -44,7 +44,7 @@ public class ProductFragment extends Fragment {
     }
 
     private void handleDownButtonClick(View view) {
-        if(quantity > 0){
+        if (quantity > 0) {
             quantity--;
         }
         updateQuantityText();
@@ -57,9 +57,9 @@ public class ProductFragment extends Fragment {
         productQuantityTextView.setText(quantity);
     }
 
-    private void updateOrder(){
+    private void updateOrder() {
         Menu menuActivity = (Menu) this.getActivity();
-        menuActivity.updateQuantity(productModel.getID(),quantity);
+        menuActivity.updateQuantity(productModel.getID(), quantity);
     }
 
     private void SetupView() {
@@ -72,7 +72,9 @@ public class ProductFragment extends Fragment {
         productCategoryTextView.setText(productModel.getCategory().getName());
         String price = productModel.getPrice() + "";
         productPriceTextView.setText(price);
-        new DownloadImageTask(imageView).execute("https://unsplash.it/300/?random");
+        if (productModel.getImage() != null && !productModel.getImage().equals("")) {
+            new DownloadImageTask(imageView).execute("http://takecoffeeadmin.gear.host/resource/" + productModel.getImage());
+        }
 
         Button upButton = (Button) getView().findViewById(R.id.upButton);
         Button downButton = (Button) getView().findViewById(R.id.downButton);

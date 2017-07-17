@@ -12,14 +12,15 @@ public class ProductModel {
     private double price;
     private CategoryModel category;
     private boolean isAvailable;
+    private String image;
 
-
-    public ProductModel(int ID, String name, double price, CategoryModel category, boolean isAvailable) {
+    public ProductModel(int ID, String name, double price, CategoryModel category, boolean isAvailable,String image) {
         this.ID = ID;
         this.name = name;
         this.price = price;
         this.category = category;
         this.isAvailable = isAvailable;
+        this.image = image;
     }
 
     public int getID() {
@@ -62,6 +63,14 @@ public class ProductModel {
         this.isAvailable = isAvailable;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     public static ProductModel FromJson(JSONObject jsonObject) throws JSONException {
         int ID = jsonObject.getInt("ID");
         String name = jsonObject.getString("name");
@@ -69,8 +78,12 @@ public class ProductModel {
         JSONObject categoryJson = jsonObject.getJSONObject("category");
         CategoryModel category = CategoryModel.FromJson(categoryJson);
         boolean isAvailable = jsonObject.getBoolean("isAvailable");
+        String image = "";
+        if(!jsonObject.isNull("image")){
+            image = jsonObject.getString("image");
+        }
 
-        return new ProductModel(ID,name,price,category,isAvailable);
+        return new ProductModel(ID,name,price,category,isAvailable,image);
     }
 
     public static ProductModel FromJson(String json) throws JSONException {
@@ -84,6 +97,7 @@ public class ProductModel {
         jsonObject.put("price",price);
         jsonObject.put("category",category.toJson());
         jsonObject.put("isAvailable",isAvailable);
+        jsonObject.put("image",image);
         return jsonObject;
     }
 }
