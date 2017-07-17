@@ -1,0 +1,151 @@
+﻿@using Entity;
+
+@{
+    ViewBag.Title = "Index";
+    //string username = Session[""];
+    ICollection<User> users = ViewBag.users;
+    User updateUser = ViewBag.user;
+    int? updateUserId = null;
+    string updateUsername = "";
+    string updatePassword = "";
+    string updatePhone = "";
+    decimal? updateBalance = 0;
+    bool? isAdmin = false;
+
+    if (updateUser != null)
+    {
+        updateUserId = updateUser.ID;
+        updateUsername = updateUser.username;
+        updatePassword = updateUser.password;
+        updatePhone = updateUser.phonenumber;
+        updateBalance = updateUser.balance;
+        isAdmin = updateUser.isEmployee;
+    }
+}
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>User</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/myStyle.css" rel="stylesheet" />
+</head>
+<body>
+    @{
+        IDictionary<string, object> formAttr = new Dictionary<string, object>
+    {
+        {"id", ""},
+        {"class",""},
+        {"enctype", "multipart/form-data"}
+    };
+    }
+    @using (Html.BeginForm("Index", "User", FormMethod.Post, formAttr))
+    {
+        <h1>USER</h1>
+        <br />
+        <div class="detail-form">
+            <div class="input-group">
+                <span class="input-group-addon">Username</span>
+                @{
+                    if (updateUser != null)
+                    {
+                        <input type="text" name="txtUsername" class="form-control" maxlength="20" value="@updateUsername" disabled />
+                    }
+                    else
+                    {
+                        <input type="text" name="txtUsername" class="form-control" maxlength="20" value="@updateUsername" />
+                    }
+                }                
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon">Password</span>
+                <input type="text" name="txtPassword" class="form-control" maxlength="20" value="@updatePassword" />
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon">Phone</span>
+                <input type="text" name="txtPhone" class="form-control" maxlength="5" value="@updatePhone" />
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon">Balance</span>
+                <input type="text" name="txtBalance" class="form-control" maxlength="5" value="@updateBalance" />
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon">Admin</span>
+                <input type="checkbox" name="chkAdmin" class="form-control" checked="@isAdmin" />
+            </div>
+            <div style="width:100%; text-align:center">
+                @{
+                    if (updateUserId == null)
+                    {
+                        <br />
+                        <button name="submit" value="Add" type="submit" class="btn btn-primary">
+                            Add
+                        </button>
+                    }
+                    else
+                    {                        
+                        <input type="hidden" value="@updateUserId" name="updateUserId" />
+                        <br />
+                        <button name="submit" value="Update" type="submit" class="btn btn-primary">
+                            Update
+                        </button>
+                    }
+                }
+            </div>
+        </div>
+                    }
+    <br />
+    <div class="container body-content">
+        <div style="width:100%; text-align: center">
+            <h2>All Product</h2>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>USERNAME</th>
+                    <th>PASSWORD</th>
+                    <th>PHONE NUMBER</th>
+                    <th>ADMIN</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach (User user in users)
+                    {
+                        <tr>
+                            <td>@user.ID</td>
+                            <td>@user.username</td>
+                            <td>@user.password</td>
+                            <td>@user.phonenumber</td>
+                            <td>
+                                @{
+                                    if (@user.isEmployee.HasValue && @user.isEmployee.Value)
+                                    {
+                                        <input type="checkbox" disabled checked />
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" disabled />
+                                    }
+                                }
+                            </td>
+                            <td>
+                                @using (Html.BeginForm("Index", "User", FormMethod.Post, formAttr))
+                                {
+                                    <input type="hidden" value="@user.ID" name="userId" />
+                                    <input type="submit" name="submit" value="Edit" class="btn btn-primary">
+                                }
+                            </td>
+                        </tr>
+                                        }
+                                    }
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>

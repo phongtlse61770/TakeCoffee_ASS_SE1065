@@ -18,16 +18,11 @@ namespace Admin.Controllers
 
                 ViewBag.orders = orders;
 
-                string username = "Asdas";
-                string password = "Adsa";
-                bool isAllow = false;
-
-                UserHelper userHelper = new UserHelper();
-                isAllow = userHelper.AuthenticateEmployee(username, password);
+                if(String.IsNullOrEmpty(Session["username"] as string))
+                {
+                    return new RedirectResult("login");
+                }
                 
-
-
-                userHelper.Dispose();
                 return View();
             }
         }
