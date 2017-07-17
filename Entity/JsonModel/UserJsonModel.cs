@@ -18,6 +18,8 @@ namespace Entity.JsonModel
         public String phonenumber { get; set; }
         [JsonProperty("balance")]
         public decimal? balance { get; set; }
+        [JsonProperty("isEmployee")]
+        public bool? isEmployee { get; set; }
 
         private static UserJsonModel FromEntity(User user)
         {

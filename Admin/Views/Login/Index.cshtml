@@ -1,5 +1,12 @@
 ﻿@{
     ViewBag.Title = "Index";
+    Layout = null;
+    bool? isSuccess = ViewBag.isSuccess;
+    string message = "";
+    if (isSuccess !=  null && isSuccess == false)
+    {
+        message = "Username or Password is wrong! Please check again!";
+    }
 }
 
 <!DOCTYPE html>
@@ -8,36 +15,36 @@
 <head>
     <meta name="viewport" content="width=device-width"/>
     <title>Login</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/myStyle.css" rel="stylesheet" />
+    
 </head>
 <body>
 @{
     IDictionary<string, object> formAttr = new Dictionary<string, object>
     {
-        {"id", ""},
-        {"class",""},
+        {"id", "loginForm"},
+        {"class","login-form"},
         {"enctype", "multipart/form-data"}
     };
-} Razor
+}
 @using (Html.BeginForm("Index", "Login", FormMethod.Post, formAttr))
 {
-    <input type="text" name="username" placeholder="Username"/>
-    <input type="password" name="password" placeholder="Password"/>
-    <input type="submit" value="OK" class="btn btn-primary"/>
+    <div class="login-title">Admin Login</div>
+    <div class="form-group">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <input type="text" name="username" placeholder="Username" class="form-control" maxlength="20" />
+        </div>        
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+            <input type="password" name="password" placeholder="Password" class="form-control" maxlength="20" />
+        </div>
+        <i class="login-fail input-group">@message</i>
+        <button type="submit" class="btn btn-primary submit-button">
+            <i class="glyphicon glyphicon-log-in"></i> Login
+        </button>
+    </div>
 }
-@*    <form class="login-form" runat="server" id="loginForm">*@
-@*        <div class="login-title">COFFEE</div>*@
-@*        <div class="form-group">*@
-@*            <div class="input-group">*@
-@*                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>*@
-@*                <asp:TextBox ID="txtUsername" runat="server" MaxLength="40" CssClass="form-control" placeholder="Username"></asp:TextBox>*@
-@*            </div>*@
-@*            <div class="input-group">*@
-@*                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>*@
-@*                <asp:TextBox ID="txtPassword" runat="server" MaxLength="40" CssClass="form-control" placeholder="Password"></asp:TextBox>*@
-@*            </div>*@
-@*            <asp:Button CssClass="btn btn-primary glyphicon glyphicon-log-in submit-button" ID="btnLogin" runat="server" Text="Login" OnClick="Page_Load"*@
-@*                        CausesValidation="false" Width="6em" />*@
-@*        </div>*@
-@*    </form>*@
 </body>
 </html>

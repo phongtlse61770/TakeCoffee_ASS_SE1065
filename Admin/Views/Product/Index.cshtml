@@ -1,0 +1,168 @@
+﻿@using Entity;
+
+@{
+    ViewBag.Title = "Index";
+    //string username = Session[""];
+    ICollection<Category> categories = ViewBag.categories;
+    ICollection<Product> products = ViewBag.products;
+    Product updateProduct = ViewBag.product;
+    int? updateProductId = null;
+    string updateProductName = "";
+    int? updateCategory = 1;
+    decimal? updatePrice = 0;
+    string updateImg = "";
+    bool isRemoved = false;
+
+    if (updateProduct != null)
+    {
+        updateProductId = updateProduct.ID;
+        updateProductName = updateProduct.name;
+        updateCategory = updateProduct.categoryID;
+        updatePrice = updateProduct.unitPrice;
+        updateImg = updateProduct.image;
+        isRemoved = updateProduct.isRemoved;
+    }
+}
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Product</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/myStyle.css" rel="stylesheet" />
+</head>
+<body>
+@{ 
+    IDictionary<string, object> formAttr = new Dictionary<string, object>
+    {
+        {"id", ""},
+        {"class",""},
+        {"enctype", "multipart/form-data"}
+    };
+}
+@using (Html.BeginForm("Index", "Product", FormMethod.Post, formAttr))
+{
+    <h1>PRODUCT</h1>
+    <br />
+    <div class="detail-form">
+        <div class="input-group">
+            <span class="input-group-addon">Name</span>
+            <input type="text" name="txtName" class="form-control" maxlength="20" value="@updateProductName"/>
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon">Category</span>
+            <select id="idCategory" name="slcCategory" class="form-control">
+                @{
+                    foreach (Category category in categories)
+                    {
+                        if (updateCategory == category.ID)
+                        {
+                            <option value="@category.ID" selected>
+                                @category.name
+                            </option>
+                        }
+                        else
+                        {
+                            <option value="@category.ID">
+                                @category.name
+                            </option>
+                        }
+                    }
+                }
+            </select> 
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon">Price</span>
+            <input type="text" name="txtPrice" class="form-control" maxlength="5" value="@updatePrice" />
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon">Image</span>
+            <input type="file" name="flImg" class="form-control" value="@updateImg" />
+        </div>        
+        <div style="width:100%; text-align:center">
+            @{
+                if (updateProductId == null)
+                {
+                    <br />
+                    <button name="submit" value="Add" type="submit" class="btn btn-primary">
+                        Add
+                    </button>
+                }
+                else
+                {
+                    <div class="input-group">
+                        <span class="input-group-addon">Remove</span>
+                        <input type="checkbox" name="chkRemoved" class="form-control" checked="@isRemoved" />
+                    </div>
+                    <input type="hidden" value="@updateProductId" name="updateProductId" />
+                    <br />
+                    <button name="submit" value="Update" type="submit" class="btn btn-primary">
+                        Update
+                    </button>
+                }
+            }
+        </div>
+    </div>
+}
+    <br />
+    <div class="container body-content">
+        <div style="width:100%; text-align: center">
+            <h2>All Product</h2>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>NAME</th>
+                    <th>CATEGORY</th>
+                    <th>UNIT PRICE</th>
+                    <th>REMOVED</th>
+                    <th>DISABLED</th>
+                    <th>IMAGE</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach (Product product in products)
+                    {
+                        <tr>
+                            <td>@product.ID</td>
+                            <td>@product.name</td>
+                            <td>@categories.First(category => category.ID == product.categoryID).name</td>
+                            <td>@product.unitPrice</td>
+                            <td>
+                            @{
+                                if (@product.isRemoved)
+                                {
+                                    <input type="checkbox" disabled checked />
+                                }
+                                else
+                                {
+                                    <input type="checkbox" disabled />
+                                }
+                            }
+                            </td>
+                            <td>@product.isDisabled</td>
+                            <td>
+                                <img src="~/resource/@product.image" />
+                            </td>
+                            <td>
+                                @using (Html.BeginForm("Index", "Product", FormMethod.Post, formAttr))
+                                {
+                                    <input type="hidden" value="@product.ID" name="productId" />
+                                    <input type="submit" name="submit" value="Edit" class="btn btn-primary">
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    
+</body>
+</html>
+

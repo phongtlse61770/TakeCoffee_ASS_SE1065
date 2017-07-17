@@ -23,6 +23,13 @@ namespace Entity.Helper
                 .ToList();
         }
 
+        public Product Find(int? id)
+        {
+            Product product = null;
+            product = db.Products.Find(id);
+            return product;
+        }
+
         public Product CreateProduct(string name, int categoryId, Decimal unitPrice, string filename)
         {
             try
@@ -55,7 +62,7 @@ namespace Entity.Helper
         /// <param name="unitPrice"></param>
         /// <param name="image"></param>
         /// <returns></returns>
-        public bool UpdateProduct(int id, string name, int? categoryId, decimal? unitPrice, Uri image)
+        public bool UpdateProduct(int? id, string name, int? categoryId, decimal? unitPrice, string image, bool? isRemoved)
         {
             try
             {
@@ -77,9 +84,16 @@ namespace Entity.Helper
                     }
                     if (image != null)
                     {
-                        product.image = Path.GetFileName(image.AbsoluteUri);
+                        product.image = image;
                     }
-
+                    if (isRemoved != null)
+                    {
+                        product.isRemoved = true;
+                    }
+                    else
+                    {
+                        product.isRemoved = false;
+                    }
                     affectedRecord = db.SaveChanges();
                 }
                 return affectedRecord == 1;

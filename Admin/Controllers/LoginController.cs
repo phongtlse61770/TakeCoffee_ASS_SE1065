@@ -18,8 +18,18 @@ namespace Admin.Controllers
         [HttpPost]
         public ActionResult Index(string username,string password)
         {
-           throw new NotImplementedException();
-            
+            bool isAllow = false;
+            UserHelper userHelper = new UserHelper();
+            isAllow = userHelper.Authenticate(username, password);
+            //userHelper.IsAdmin()
+            userHelper.Dispose();
+            if(isAllow)
+            {
+                Session["username"] = username;
+                return RedirectToAction("Index", "Home");
+            }
+            ViewBag.isSuccess = false;
+            return View();            
         }
     }
 }

@@ -41,7 +41,7 @@ namespace Entity.Helper
             return db.Users.ToList();
         }
 
-        public User CreateUser(string username, string password, string phonenumber, bool isEmployee)
+        public User CreateUser(string username, string password, string phonenumber, decimal? balance, bool? isEmployee)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace Entity.Helper
                         username = username,
                         password = password,
                         phonenumber = phonenumber,
-                        balance = 0,
+                        balance = balance,
                         isEmployee = isEmployee
                     };
                     db.Users.Add(newUser);
@@ -69,6 +69,13 @@ namespace Entity.Helper
             }
         }
 
+        public User Find(int? id)
+        {
+            User user = null;
+            user = db.Users.Find(id);
+            return user;
+        }
+
         /// <summary>
         ///     Update a value that is not null
         ///     when want to delete a value(ex:phone number) set it to emptry string (ex: "") 
@@ -78,7 +85,7 @@ namespace Entity.Helper
         /// <param name="isEmployee"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public bool UpdateUser(int id, string phonenumber, bool? isEmployee, string password)
+        public bool UpdateUser(int? id, string phonenumber, bool? isEmployee, string password)
         {
             try
             {

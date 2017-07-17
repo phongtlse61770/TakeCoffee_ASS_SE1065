@@ -10,20 +10,10 @@ namespace Admin.Controllers
     {
         public ActionResult Index()
         {
-            return View();
-        }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
+            if (string.IsNullOrEmpty(Session["username"] as string))
+            {
+                return new RedirectResult("login");
+            }
             return View();
         }
     }
