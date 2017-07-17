@@ -22,6 +22,12 @@ public class TakeCoffeeServiceHelper {
         sendRequest(context,signup,resultReceiver);
     }
 
+    synchronized public static void getShippingFee(Context context,ResultReceiver resultReceiver,double longitude,double latitude){
+        GetShippingFeeRequest request = new GetShippingFeeRequest(longitude, latitude);
+        sendRequest(context,request,resultReceiver);
+    }
+
+
 
     synchronized public static void checkLogin(Context context,ResultReceiver resultReceiver,String username, String password){
         CheckLoginRequest getBalanceRequest = new CheckLoginRequest(username,password);
