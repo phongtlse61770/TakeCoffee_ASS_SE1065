@@ -21,8 +21,8 @@ namespace API.Controllers
             String clientLatitude;
             try
             {
-                clientLongitude = jObject["Latitude"].Value<string>();
-                clientLatitude = jObject["Longitude"].Value<string>();
+                clientLongitude = jObject["Longitude"].Value<string>();
+                clientLatitude = jObject["Latitude"].Value<string>();
             }
             catch (Exception ex)
             {
