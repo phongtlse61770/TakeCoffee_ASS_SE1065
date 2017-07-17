@@ -31,7 +31,7 @@ namespace Entity.Helper
             }
         }
 
-        public bool UpdateCategory(int id, string name)
+        public bool UpdateCategory(int? id, string name)
         {
             try
             {
@@ -66,6 +66,13 @@ namespace Entity.Helper
                 return false;
             }
             
+        }
+
+        public Category Find(int? id)
+        {
+            Category category = null;
+            category = db.Categories.Find(id);
+            return category;
         }
     }
 }

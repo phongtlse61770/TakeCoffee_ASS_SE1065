@@ -1,0 +1,101 @@
+﻿@using Entity;
+
+@{
+    ViewBag.Title = "Index";
+    //string username = Session[""];
+    ICollection<Category> categories = ViewBag.categories;
+    Category updateCategory = ViewBag.category;
+    int? updateCategoryId = null;
+    string updateName = "";
+
+    if (updateCategory != null)
+    {
+        updateCategoryId = updateCategory.ID;
+        updateName = updateCategory.name;
+    }
+}
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>User</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/myStyle.css" rel="stylesheet" />
+</head>
+<body>
+    @{
+        IDictionary<string, object> formAttr = new Dictionary<string, object>
+    {
+        {"id", ""},
+        {"class",""},
+        {"enctype", "multipart/form-data"}
+    };
+    }
+    @using (Html.BeginForm("Index", "Category", FormMethod.Post, formAttr))
+    {
+        <h1>CATEGORY</h1>
+        <br />
+        <div class="detail-form">
+            <div class="input-group">
+                <span class="input-group-addon">Name</span>
+                <input type="text" name="txtName" class="form-control" maxlength="20" value="@updateName" />
+            </div>            
+            <div style="width:100%; text-align:center">
+                @{
+                    if (updateCategoryId == null)
+                    {
+                        <br />
+                        <button name="submit" value="Add" type="submit" class="btn btn-primary">
+                            Add
+                        </button>
+                    }
+                    else
+                    {
+                        <input type="hidden" value="@updateCategoryId" name="updateCategoryId" />
+                        <br />
+                        <button name="submit" value="Update" type="submit" class="btn btn-primary">
+                            Update
+                        </button>
+                    }
+                }
+            </div>
+        </div>
+                    }
+    <br />
+    <div class="container body-content">
+        <div style="width:100%; text-align: center">
+            <h2>All Category</h2>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>NAME</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach (Category category in categories)
+                    {
+                        <tr>
+                            <td>@category.ID</td>
+                            <td>@category.name</td>
+                            <td>
+                                @using (Html.BeginForm("Index", "Category", FormMethod.Post, formAttr))
+                                {
+                                    <input type="hidden" value="@category.ID" name="categoryId" />
+                                    <input type="submit" name="submit" value="Edit" class="btn btn-primary">
+                                }
+                            </td>
+                        </tr>
+                                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
