@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.TextView;
 import com.example.lam.coffeeproject.API.Requests.GetMenuRequest;
 import com.example.lam.coffeeproject.API.Requests.GetShippingFeeRequest;
+import com.example.lam.coffeeproject.API.Requests.OrderRequest;
 import com.example.lam.coffeeproject.API.TakeCoffeeService;
 import com.example.lam.coffeeproject.API.TakeCoffeeServiceHelper;
 import com.example.lam.coffeeproject.Model.CategoryModel;
@@ -141,6 +142,15 @@ public class Menu extends AppCompatActivity {
         updateTotalCost();
     }
 
+    ResultReceiver OrderReceiver = new ResultReceiver(new Handler()) {
+        @Override
+        protected void onReceiveResult(int resultCode, Bundle resultData) {
+            OrderRequest orderRequest = resultData.getParcelable(TakeCoffeeService.EXTRA_REQUEST);
+
+        }
+    };
+
     public void handleOrderButtonClick(View view) {
+        TakeCoffeeServiceHelper.order(this,OrderReceiver,order,shipFee);
     }
 }
