@@ -114,7 +114,7 @@ namespace Entity.Helper
             return false;
         }
 
-        public bool AddBalance(int userId, decimal balance)
+        public bool AddBalance(int? userId, decimal? balance)
         {
             bool isSuccess = false;
 

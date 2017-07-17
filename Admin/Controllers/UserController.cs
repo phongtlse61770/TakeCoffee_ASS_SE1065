@@ -22,7 +22,8 @@ namespace Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(string submit, int? userId, string txtName, string txtPassword, string txtPhone, decimal? txtBalance, int? updateUserId, bool? chkAdmin)
+        public ActionResult Index(string submit, int? userId, string txtName, string txtPassword, string txtPhone, decimal? txtBalance, int? updateUserId,
+            bool? chkAdmin, decimal? txtAddMoney)
         {
             switch (submit)
             {
@@ -43,6 +44,12 @@ namespace Admin.Controllers
                     {
                         User user = userHelper.Find(userId);
                         ViewBag.user = user;
+                    }
+                    return Index();
+                case "Add Money":
+                    using (UserHelper userHelper = new UserHelper())
+                    {
+                        userHelper.AddBalance(updateUserId, txtAddMoney);
                     }
                     return Index();
                 default:

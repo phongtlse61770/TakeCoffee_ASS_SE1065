@@ -65,11 +65,32 @@
             </div>
             <div class="input-group">
                 <span class="input-group-addon">Phone</span>
-                <input type="text" name="txtPhone" class="form-control" maxlength="5" value="@updatePhone" />
+                <input type="text" name="txtPhone" class="form-control" maxlength="10" value="@updatePhone" />
             </div>
             <div class="input-group">
-                <span class="input-group-addon">Balance</span>
-                <input type="text" name="txtBalance" class="form-control" maxlength="5" value="@updateBalance" />
+                <span class="input-group-addon">Balance</span>                
+                @{
+                    if (updateUser != null)
+                    {
+                        <input type="text" name="txtBalance" class="form-control" maxlength="10" value="@updateBalance" disabled />
+                    }
+                    else
+                    {
+                        <input type="text" name="txtBalance" class="form-control" maxlength="5" value="@updateBalance" />
+                    }
+                }
+            </div>
+            <div style="width:100%; margin-left:25%">
+                @{
+                    if (updateUser != null)
+                    {
+                        <div style="width:4%;float:left;padding-left:1.5%"><b>+</b></div>
+                        <div style="width:62%;float:left"><input type="text" name="txtAddMoney" class="form-control" maxlength="10" style="width:100%" /></div>
+                        <button name="submit" value="Add Money" type="submit" class="btn btn-primary">
+                            Add
+                        </button>
+                    }
+                }                
             </div>
             <div class="input-group">
                 <span class="input-group-addon">Admin</span>
@@ -108,6 +129,7 @@
                     <th>USERNAME</th>
                     <th>PASSWORD</th>
                     <th>PHONE NUMBER</th>
+                    <th>BALANCE</th>
                     <th>ADMIN</th>
                     <th></th>
                 </tr>
@@ -121,6 +143,7 @@
                             <td>@user.username</td>
                             <td>@user.password</td>
                             <td>@user.phonenumber</td>
+                            <td>@user.balance</td>
                             <td>
                                 @{
                                     if (@user.isEmployee.HasValue && @user.isEmployee.Value)
