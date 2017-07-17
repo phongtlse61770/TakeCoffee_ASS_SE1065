@@ -94,7 +94,7 @@
                 {
                     <div class="input-group">
                         <span class="input-group-addon">Remove</span>
-                        <input type="checkbox" name="chkRemoved" class="form-control" checked="@isRemoved" />
+                        <input type="checkbox" name="chkRemoved" class="form-control" checked="@isRemoved" onchange="isCheck(this);" value="@isRemoved" />
                     </div>
                     <input type="hidden" value="@updateProductId" name="updateProductId" />
                     <br />
@@ -147,7 +147,7 @@
                             </td>
                             <td>@product.isDisabled</td>
                             <td>
-                                <img src="~/resource/@product.image" />
+                                <img src="~/resource/@product.image" height="10em" width="10em" />
                             </td>
                             <td>
                                 @using (Html.BeginForm("Index", "Product", FormMethod.Post, formAttr))
@@ -162,7 +162,11 @@
             </tbody>
         </table>
     </div>
-    
+    <script>
+        function isCheck(checkBox) {
+            checkBox.setAttribute("value", checkBox.checked);
+        }
+    </script>
 </body>
 </html>
 

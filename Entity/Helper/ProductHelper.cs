@@ -86,14 +86,18 @@ namespace Entity.Helper
                     {
                         product.image = image;
                     }
-                    if (isRemoved != null)
+                    if (isRemoved.HasValue)
                     {
-                        product.isRemoved = true;
+                        if (isRemoved.Value)
+                        {
+                            product.isRemoved = true;
+                        }
+                        else
+                        {
+                            product.isRemoved = false;
+                        }
                     }
-                    else
-                    {
-                        product.isRemoved = false;
-                    }
+                    
                     affectedRecord = db.SaveChanges();
                 }
                 return affectedRecord == 1;

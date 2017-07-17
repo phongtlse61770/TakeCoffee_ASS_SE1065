@@ -36,21 +36,22 @@ namespace Admin.Controllers
         [HttpPost]
         public ActionResult Index(int? productId, string submit, string txtName, int? slcCategory, string txtPrice, HttpPostedFileBase flImg, int? updateProductId,
             bool? chkRemoved)
-        {            
+        {
+            string filename = null;
             switch (submit)
             {
                 case "Add":
-                    string filename = saveImg(flImg);
+                    filename = saveImg(flImg);
                     using (ProductHelper productHelper = new ProductHelper())
                     {
                         productHelper.CreateProduct(txtName, slcCategory.Value, Convert.ToDecimal(txtPrice), filename);
                     }
                     return Index();
                 case "Update":
-                    string filename1 = saveImg(flImg);
+                    filename = saveImg(flImg);
                     using (ProductHelper productHelper = new ProductHelper())
                     {
-                        productHelper.UpdateProduct(updateProductId, txtName, slcCategory.Value, Convert.ToDecimal(txtPrice), filename1, chkRemoved);
+                        productHelper.UpdateProduct(updateProductId, txtName, slcCategory.Value, Convert.ToDecimal(txtPrice), filename, chkRemoved);
                     }
                     return Index();
                 case "Edit":
@@ -74,12 +75,12 @@ namespace Admin.Controllers
                 // store the file inside ~/App_Data/uploads folder
                 if (fileName != null)
                 {
-                    var path = Path.Combine(Server.MapPath("~/App_Data/images"), fileName);
+                    var path = Path.Combine(Server.MapPath("~/resource"), fileName);
                     file.SaveAs(path);
                     return file.FileName; 
                 }
             }
-            throw new Exception();
+            return null;
         }
     }
 }
