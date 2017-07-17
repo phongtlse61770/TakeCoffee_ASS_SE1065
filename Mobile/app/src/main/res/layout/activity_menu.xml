@@ -1,11 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.lam.coffeeproject.Menu">
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context="com.example.lam.coffeeproject.Menu">
 
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                      android:orientation="vertical" android:id="@+id/productHolder"/>
+                      android:orientation="vertical" android:id="@+id/productHolder">
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/shipFeeTextView"
+                    tools:text="Turn on GPS for shipping fee"/>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/totalCostTextView"
+                    tools:text="Total cost:"/>
+            <Button
+                    android:text="ORDER"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/orderButton"
+                    android:layout_marginStart="100dp" android:layout_marginEnd="100dp"
+            android:onClick="handleOrderButtonClick"/>
+        </LinearLayout>
+    </LinearLayout>
+
 </ScrollView>

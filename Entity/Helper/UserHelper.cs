@@ -133,10 +133,10 @@ namespace Entity.Helper
         {
             bool isSuccess = false;
 
-            var find = db.Users.Find(userId);
-            if (find != null)
+            User foundUser = db.Users.Find(userId);
+            if (foundUser?.balance - balance > 0)
             {
-                find.balance -= balance;
+                foundUser.balance -= balance;
                 db.SaveChanges();
                 isSuccess = true;
             }

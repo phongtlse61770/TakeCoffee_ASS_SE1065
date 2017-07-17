@@ -24,6 +24,27 @@ namespace Entity.Helper
             return totalPrice;
         }
 
+        public Decimal CalculateOrderPrice(IDictionary<int, int> productList, decimal shipfee)
+        {
+            Decimal totalPrice = 0;
+            foreach (KeyValuePair<int, int> valuePair in productList)
+            {
+                int productId = valuePair.Key;
+                int quantity = valuePair.Value;
+                Product product = db.Products.Find(productId);
+
+                totalPrice += quantity * product.unitPrice.Value;
+            }
+            totalPrice += shipfee;
+            return totalPrice;
+        }
+
+        public bool AddOrder(Order order)
+        {
+            db.Orders.Add(order);
+            return db.SaveChanges() > 0;
+        }
+
         public Decimal CalculateOrderPrice(Order order, decimal shipfee)
         {
             return CalculateOrderPrice(order) + shipfee;
@@ -36,7 +57,7 @@ namespace Entity.Helper
         /// <param name="customerId"></param>
         /// <param name="employeeId"></param>
         /// <returns></returns>
-        public Order CreateOrder(IDictionary<Product,int> productList, int customerId, int employeeId)
+        public Order CreateOrder(IDictionary<int, int> productList, int customerId, int? employeeId = null)
         {
             try
             {
@@ -47,9 +68,22 @@ namespace Entity.Helper
                     employeeID = employeeId,
                     isConfirmed = false
                 };
-                
-                db.Orders.Add(order);
-                db.SaveChanges();
+                //--------------------------
+                order.OrderProducts = new List<OrderProduct>();
+                foreach (KeyValuePair<int, int> valuePair in productList)
+                {
+                    int productId = valuePair.Key;
+                    int quantity = valuePair.Value;
+                    Product product = db.Products.Find(productId);
+                    OrderProduct orderProduct = new OrderProduct
+                    {
+                        producID = product.ID,
+                        quantity = quantity,
+                        unitPrice = product.unitPrice
+                    };
+                    order.OrderProducts.Add(orderProduct);
+                }
+
                 return order;
             }
             catch (Exception)

@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.ResultReceiver;
 import com.example.lam.coffeeproject.API.Requests.*;
 
+import java.util.Map;
+
 /**
  * Created by Phong on 7/5/2017.
  */
@@ -12,15 +14,24 @@ public class TakeCoffeeServiceHelper {
 
     synchronized public static void getMenu(Context context,ResultReceiver resultReceiver){
         GetMenuRequest getMenuRequest = new GetMenuRequest();
-
         sendRequest(context,getMenuRequest,resultReceiver);
     }
 
     synchronized public static void signup(Context context,ResultReceiver resultReceiver,String username,String password,String phonenumber){
         SignupRequest signup = new SignupRequest(username, password, phonenumber);
-
         sendRequest(context,signup,resultReceiver);
     }
+
+    synchronized public static void order(Context context, ResultReceiver resultReceiver, Map<Integer,Integer> orderDetail,double shipfee){
+        OrderRequest signup = new OrderRequest(orderDetail,shipfee);
+        sendRequest(context,signup,resultReceiver);
+    }
+
+    synchronized public static void getShippingFee(Context context,ResultReceiver resultReceiver,double longitude,double latitude){
+        GetShippingFeeRequest request = new GetShippingFeeRequest(longitude, latitude);
+        sendRequest(context,request,resultReceiver);
+    }
+
 
 
     synchronized public static void checkLogin(Context context,ResultReceiver resultReceiver,String username, String password){

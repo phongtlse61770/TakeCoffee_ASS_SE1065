@@ -72,8 +72,6 @@ public class storelocation extends AppCompatActivity {
                 Toast.makeText(storelocation.this, "top", Toast.LENGTH_SHORT).show();
             }
             public void onSwipeRight() {
-                Toast.makeText(storelocation.this, "right", Toast.LENGTH_SHORT).show();
-
                 int nextIndex = gallery.getSelectedItemPosition()-1;
                 if(nextIndex < imageIDs.length && nextIndex >= 0){
                     gallery.setSelection(nextIndex,true);
@@ -82,8 +80,6 @@ public class storelocation extends AppCompatActivity {
                 }
             }
             public void onSwipeLeft() {
-                Toast.makeText(storelocation.this, "left", Toast.LENGTH_SHORT).show();
-
                 int nextIndex = gallery.getSelectedItemPosition()+1;
                 if(nextIndex < imageIDs.length && nextIndex >= 0){
                     gallery.setSelection(nextIndex,true);
