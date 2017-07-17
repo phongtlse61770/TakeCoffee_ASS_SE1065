@@ -2,12 +2,14 @@ package com.example.lam.coffeeproject;
 
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -79,7 +81,9 @@ public class Menu extends AppCompatActivity {
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, locationListener);
         Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        updateLocation(location);
+        if(location != null){
+            updateLocation(location);
+        }
     }
 
     ResultReceiver getShippingFeeReceiver = new ResultReceiver(new Handler()) {
@@ -117,7 +121,7 @@ public class Menu extends AppCompatActivity {
             total += productPrice * productQuantity;
         }
 
-        if(shipFee != null){
+        if (shipFee != null) {
             total += shipFee;
         }
 
@@ -145,12 +149,57 @@ public class Menu extends AppCompatActivity {
     ResultReceiver OrderReceiver = new ResultReceiver(new Handler()) {
         @Override
         protected void onReceiveResult(int resultCode, Bundle resultData) {
-            OrderRequest orderRequest = resultData.getParcelable(TakeCoffeeService.EXTRA_REQUEST);
-
+            try {
+                OrderRequest orderRequest = resultData.getParcelable(TakeCoffeeService.EXTRA_REQUEST);
+                String message;
+                if (orderRequest.isSuccess()) {
+                    message = "Order success";
+                }else{
+                    message = "Insufficient balance";
+                }
+                Menu.this.showMessageDialog(message);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     };
 
     public void handleOrderButtonClick(View view) {
-        TakeCoffeeServiceHelper.order(this,OrderReceiver,order,shipFee);
+        if(shipFee != null){
+            TakeCoffeeServiceHelper.order(Menu.this, OrderReceiver, order, shipFee);
+        }else{
+            AlertDialog.Builder balance = new AlertDialog.Builder(Menu.this);
+            balance.setMessage("Your order is not include ship fee ");
+            balance.setCancelable(true);
+            balance.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    TakeCoffeeServiceHelper.order(Menu.this, OrderReceiver, order, 0);
+                    dialog.cancel();
+                }
+            });
+            balance.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            AlertDialog dialog = balance.create();
+            dialog.show();
+        }
+    }
+
+    private void showMessageDialog(String message) {
+        AlertDialog.Builder balance = new AlertDialog.Builder(Menu.this);
+        balance.setMessage(message);
+        balance.setCancelable(true);
+        balance.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog dialog = balance.create();
+        dialog.show();
     }
 }

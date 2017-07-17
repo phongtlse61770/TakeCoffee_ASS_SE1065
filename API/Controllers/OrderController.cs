@@ -61,7 +61,6 @@ namespace API.Controllers
 
             using (var orderHelper = new OrderHelper())
             {
-
                 using (var userHelper = new UserHelper())
                 {
                     Decimal totalCost = orderHelper.CalculateOrderPrice(productList, shipfee);
@@ -71,8 +70,9 @@ namespace API.Controllers
 
                     if (order != null)
                     {
-                        if(orderHelper.AddOrder(order))
-                            isSuccess = userHelper.RemoveBalance(userId, totalCost);
+                        if (userHelper.RemoveBalance(userId, totalCost))
+                            if (orderHelper.AddOrder(order))
+                                isSuccess = true;
                     }
 
                     JObject response = new JObject
