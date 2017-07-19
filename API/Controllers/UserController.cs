@@ -123,7 +123,7 @@ namespace API.Controllers
             //---------------------------------------------
             using (UserHelper userHelper = new UserHelper())
             {
-                User user = userHelper.CreateUser(username, password, phonenumber,false);
+                User user = userHelper.CreateUser(username, password, phonenumber, 0,false);
                 dynamic response = new JObject();
                 response["result"] = user != null;
                 return Ok(response);

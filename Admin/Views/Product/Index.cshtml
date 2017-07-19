@@ -147,7 +147,17 @@
                             </td>
                             <td>@product.isDisabled</td>
                             <td>
-                                <img src="~/resource/@product.image" height="10em" width="10em" />
+                                <div style="width:200px; height:200px; text-align:center">
+                                    @{
+                                        if (product.image != null)
+                                        {
+                                            <img src="~/resource/@product.image" width="100%"/>
+                                        }else
+                                        {
+                                            <span>Product don't have image</span>
+                                        }
+                                    }
+                                </div>                                
                             </td>
                             <td>
                                 @using (Html.BeginForm("Index", "Product", FormMethod.Post, formAttr))

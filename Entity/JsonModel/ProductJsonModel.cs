@@ -29,6 +29,9 @@ namespace Entity.JsonModel
         [JsonProperty("isAvailable", NullValueHandling = NullValueHandling.Ignore)]
         public bool? IsAvailable { get; set; }
 
+        [JsonProperty("image", NullValueHandling = NullValueHandling.Ignore)]  
+        private string Image { get; set; }
+
         internal static ProductJsonModel FromEntity(Product product,bool category = true)
         {
             ProductJsonModel productJsonModel = new ProductJsonModel
@@ -38,7 +41,8 @@ namespace Entity.JsonModel
                 Price = product.unitPrice,
 //                Category = (CategoryJsonModel) product.Category,
                 Quantity = null,
-                IsAvailable = true
+                IsAvailable = true,
+                Image = product.image
             };
             if (category)
             {
@@ -57,7 +61,8 @@ namespace Entity.JsonModel
                 Price = orderProduct.unitPrice,
                 Category = (CategoryJsonModel) product.Category,
                 Quantity = orderProduct.quantity,
-                IsAvailable = null
+                IsAvailable = null,
+                Image = product.image
             };
         }
 

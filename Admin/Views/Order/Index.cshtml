@@ -2,6 +2,7 @@
 
 @{
     ICollection<Order> orders = ViewBag.orders;
+    ICollection<User> users = ViewBag.users;
 }
 
 <!DOCTYPE html>
@@ -20,7 +21,7 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>NAME</th>
+                    <th>TIME</th>
                     <th>EMPLOYEE ID</th>
                     <th>CUSTOMER ID</th>
                 </tr>
@@ -29,11 +30,23 @@
                 @{
                     foreach (Order order in orders)
                     {
+                        string empName = "";
+                        string cusName = "";
+                        foreach(User user in users){
+                            if(order.customerID == user.ID)
+                            {
+                                cusName = user.username;
+                            }
+                            if (order.employeeID == user.ID)
+                            {
+                                empName = user.username;
+                            }
+                        }
                         <tr>
                             <td>@order.ID</td>
                             <td>@order.createdTime</td>
-                            <td>@order.employeeID</td>
-                            <td>@order.customerID</td>
+                            <td>@empName</td>
+                            <td>@cusName</td>
                         </tr>
                     }
                 }

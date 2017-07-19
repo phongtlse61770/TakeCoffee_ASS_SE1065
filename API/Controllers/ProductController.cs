@@ -44,13 +44,15 @@ namespace API.Controllers
                         ICollection<ProductJsonModel> productJsonModels = new List<ProductJsonModel>();
                         foreach (Product product in productHelper.GetProductByCaterory(category.ID))
                         {
-                            ProductJsonModel productJsonModel = (ProductJsonModel) product;
-                            productJsonModels.Add(productJsonModel);
+                            if (!product.isRemoved)
+                            {
+                                ProductJsonModel productJsonModel = (ProductJsonModel) product;
+                                productJsonModels.Add(productJsonModel);
+                            }
                         }
                         CategoryJsonModel categoryJsonModel = (CategoryJsonModel) category;
                         categoryJsonModel.ProductList = productJsonModels;
                         categoryJsonModels.Add(categoryJsonModel);
-
                     }
                     return Ok(categoryJsonModels);
                 }
