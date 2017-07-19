@@ -12,19 +12,26 @@ namespace Admin.Controllers
     {
         public ActionResult Index()
         {
+            if (String.IsNullOrEmpty(Session["username"] as string))
+            {
+                return new RedirectResult("login");
+            }
+
             using (OrderHelper orderHelper = new OrderHelper())
             {
                 ICollection<Order> orders = orderHelper.GetAllOrder();
-
-                ViewBag.orders = orders;
-
-                if(String.IsNullOrEmpty(Session["username"] as string))
-                {
-                    return new RedirectResult("login");
-                }
                 
-                return View();
+                ViewBag.orders = orders;
             }
+
+            using (UserHelper userHeplper = new UserHelper())
+            {
+                ICollection<User> users = userHeplper.GetAllUser();
+                ViewBag.users = users;
+
+            }
+
+            return View();
         }
     }
 }
